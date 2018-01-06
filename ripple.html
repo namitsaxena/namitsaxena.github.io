@@ -61,8 +61,6 @@ button:not(.offline) {
 
 
 <h3><span style="color:red">Note:</span> Some users have reported bugs when using this client in Safari. Please use a non-Safari browser.</h3>
-<h4>Usage</h4>
-<li>Source can be found <a href="https://github.com/namitsaxena/minimalist-ripple-client">here</a> (forked from minimalist ripple client) </li>
 
 <h2>identity</h2>
 
@@ -189,7 +187,29 @@ button:not(.offline) {
 <h2>disclaimer</h2>
 <p>this product is provided "as is" without warranty of any kind and is not endorsed by ripple labs inc.</p>
 
+<h3>Usage</h3>
+<li>Source can be found <a href="https://github.com/namitsaxena/minimalist-ripple-client">here</a> (forked from minimalist ripple client) </li>
+<li>Bold or ~ operations are online. Evrything else is offline</li>
 
+<h4>Generating a new wallet/address</h4>
+<li>Click generate identity. SAVE the secret (Same public address will get generated using the private key. Public address starts with r. Others can send XRP to this)</li>
+<li>Optional but strongly recommended. Encrypt the secret. (while setting this again, the toolw will ask for your passphrase)</li>
+<li>Cold/Paper wallet has been created</li>
+
+<h4>Checking funds sent to the above wallet/address (from elsewhere)</h4>
+<li>Open wallet page</li>
+<li>Fill in with secret or encrypeted secret</li>
+<li>click set identity button. The public address should show up</li>
+<li>Now in the "connect" section, click "connect to ripple" in order to establish a connection. If everything was entered correctly, a popup box should display "success". :-)</li>
+<li>"account details" section, click "use current identity" which will load your wallet address.
+<li>click "view info". It should show the transferred amount in drops (a drop is a millionth of an XRP)</li>
+
+<h4>Transferring XRP to another address</h4>
+<li>Set identity and connect as described above</li>
+<li>in the "send payment" section, enter number of XRP to send and check direct xrp→xrp flag</li>
+<li>enter the destination address (usually starting with r)</li>
+<li>Read carefully - if the destination requires you to enter a "destination tag" (often used to identify your transfer if the destination address/wallet is a shared one), click the "use optional fields" checkbox and enter the destination tag</li>
+<li>click send button ; success message should popup</li>
 
 
 
