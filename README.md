@@ -5,3 +5,5 @@ Website with source from this page: http://pages.namitsaxena.com/
 
 Home page / parent domain (non-github)
 http://www.namitsaxena.com/
+
+[jekyll-now](https://github.com/barryclark/jekyll-now)
