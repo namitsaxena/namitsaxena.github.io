@@ -1,7 +1,7 @@
 ---
-published: false
+layout: page
+title: Git Cheatsheet
 ---
-## Git Cheatsheet
 
 ### squash commits
 1. Choose the exact number of commits that you want to squash
