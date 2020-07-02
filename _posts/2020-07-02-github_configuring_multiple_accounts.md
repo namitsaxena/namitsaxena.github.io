@@ -1,7 +1,4 @@
 ---
-published: false
----
----
 layout: blog
 title: Configuring Multiple SSH Accounts in GitHub
 ---
