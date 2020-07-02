@@ -1,7 +1,10 @@
 ---
 published: false
 ---
-## Configuring Multiple SSH Accounts in GitHub
+---
+layout: blog
+title: Configuring Multiple SSH Accounts in GitHub
+---
 
 GitHub doesn't allow to use the same ssh key with multiple accounts. If you have two keys, then you need to configure your ssh config so that it automatically chooses the right key based on the url
 1. Generate keys
