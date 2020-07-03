@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Git Cheatsheet
+tags: [git, tech, cheatsheet]
 ---
 
 ### squash commits
