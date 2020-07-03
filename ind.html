@@ -4,10 +4,10 @@ layout: default
 
 <div class="posts">
   {% for post in site.posts %}
-    <article class="post">
-
-      <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-
-    </article>
+    {% if page.layout == 'blog' %}
+	    <article class="post">
+	      <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+	    </article>
+    {% endif %}
   {% endfor %}
 </div>
