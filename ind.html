@@ -4,7 +4,7 @@ layout: default
 
 <div class="posts">
   {% for post in site.posts %}
-    {% if page.layout == 'blog' %}
+    {% if page.layout == 'page' %}
 	    <article class="post">
 	      <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 	    </article>
