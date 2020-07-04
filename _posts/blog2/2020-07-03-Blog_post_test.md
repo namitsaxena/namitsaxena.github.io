@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Jekyll Blog - Organizing by folder
+categories: draft
 tags: [tech, jekyll, blog]
 ---
 
