@@ -25,7 +25,7 @@ google_analytics_id: UA-123456-78
 author:
   name: Namit Saxena
   description: Personal Blog
-  #gravatar: 000112233 # md5 hash of your email address	  
+  gravatar: 000112233 # md5 hash of your email address	  
   contact:
     linkedin:  https://www.linkedin.com/in/namitsaxena
     github:    https://github.com/namitsaxena

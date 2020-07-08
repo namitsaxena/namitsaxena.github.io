@@ -7,6 +7,11 @@
   <div class="sidebar-item">
     <div class="sidebar-personal-info">
       <div class="sidebar-personal-info-section">
+        <a href="http://gravatar.com/{{ site.author.gravatar }}">
+          <img src="http://www.gravatar.com/avatar/{{ site.author.gravatar }}?s=350" title="View on Gravatar" alt="View on Gravatar" />
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
         <p>{{ site.author.description }}</p>
       </div>
       {% if site.author.contact %}
@@ -64,37 +69,16 @@
 
     <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
   </nav>
-<!-- Toggleable sidebar -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-item">
-    <p>{{ site.description }}</p>
-  </div>
-
-  <nav class="sidebar-nav">
-    <a class="sidebar-nav-item{% if page.title == 'Home' %} active{% endif %}" href="{{ '/' | absolute_url }}">Home</a>
-
-    {% comment %}
-      The code below dynamically generates a sidebar nav of pages with
-      `layout: page` in the front-matter. See readme for usage.
-    {% endcomment %}
-
-    {% assign pages_list = site.pages | sort:"url" %}
-    {% for node in pages_list %}
-      {% if node.title != null %}
-        {% if node.layout == "page" %}
-          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url | absolute_url }}">{{ node.title }}</a>
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-
-    <a class="sidebar-nav-item" href="http://www.namitsaxena.com">Website</a>
-    <a class="sidebar-nav-item" href="https://github.com/namitsaxena">GitHub project</a>
-    <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
-  </nav>
 
   <div class="sidebar-item">
     <p>
-      &copy; {{ site.time | date: '%Y' }}. All rights reserved.
+    &copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. This work is liscensed under <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a> and <a href="http://namitsaxena.github.io">lanyon</a>
     </p>
   </div>
 </div>
