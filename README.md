@@ -3,7 +3,7 @@
 ## How To
 * Fork https://github.com/poole/lanyon
 * Rename to your username: namitsaxena.github.io
-  * If you want to make this private, you will need to duplicate since forked repos can't be made private  
+  * If you want to make this private, you will need to [duplicate](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository) since forked repos can't be made private  
 * Update master branch (master branch - unlike the instruction in poole)
   * _config.yml
   * CNAME
