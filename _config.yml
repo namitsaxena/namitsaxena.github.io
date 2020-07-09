@@ -12,6 +12,13 @@ author:
   name:              Namit Saxena
   url:               http://www.namitsaxena.com
   email:             info@namitsaxena.com
+  description:       Personal Blog
+  gravatar:          000112233 # md5 hash of your email address	  
+  contact:
+    linkedin:        https://www.linkedin.com/in/namitsaxena
+    github:          https://github.com/namitsaxena
+    twitter:         https://twitter.com/namitsaxena
+    email:           info@namitsaxena.com
 
 # Gems
 plugins:
@@ -21,26 +28,17 @@ plugins:
 version:             1.0.0
 google_analytics_id: UA-123456-78
 
-# About/contact
-author:
-  name: Namit Saxena
-  description: Personal Blog
-  gravatar: 000112233 # md5 hash of your email address	  
-  contact:
-    linkedin:  https://www.linkedin.com/in/namitsaxena
-    github:    https://github.com/namitsaxena
-    twitter:   https://twitter.com/namitsaxena
-    email:     info@namitsaxena.com
-
 # Navigation (2nd level links supported)
 nav:
   Home:           
     - '/'
+  Website:
+    - 'http://www.namitsaxena.com'
   Blog:           
     - '/blog/'
     - { Categories: '/categories/' }
     - { Tags: '/tags/' }
+  Quick Links:
+    - '/notes/links/'  
   About:          
     - '/about/'
-  Github Project: 
-    - 'http://namitsaxena.github.io/'

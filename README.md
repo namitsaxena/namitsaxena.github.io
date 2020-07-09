@@ -13,8 +13,9 @@
     * ex: https://github.com/s311354/Louis.github.io/blob/master/_config.yml#L13
 
 ## Notes
-* Any files at the root level - (with script(~) or .md) show up in sidebar
-* All md files also get processed (as expected)
+* Any files at the root level - (with script(~) or .md) show up in sidebar, by default (this behavior changed here to allow tigher control but please refer to the original _includes/sidebar code)
+* All md files also get processed (as expected). Will show up as processed if accessed without extension. With extension show up in raw (with markdown) format
+  ** if there are errors then files don’t show up processed
 * html files can be accessed as it is since they don’t need to be processed
 * certain files like index-blog.html are just accessed via http://pages.namitsaxena.com/index-blog/ (i.e. without .html)
   * plain md files are also accessed without extension
