@@ -18,7 +18,7 @@
       {% assign len = site.author.contact | size %}
       {% assign current_index = 0 %}
       <div class="sidebar-personal-info-section">
-        <p> Follow me: 
+        <p> Contact: 
         {% for contact in site.author.contact %}
         {% assign iconname = contact[0] %}
         {% if contact[0] == 'email' %}
@@ -78,7 +78,9 @@
 
   <div class="sidebar-item">
     <p>
-    Powered by <a href="http://jekyllrb.com">jekyll</a> and <a href="http://namitsaxena.github.io">lanyon</a>
+      Powered by <a href="http://jekyllrb.com">jekyll</a> and <a href="http://namitsaxena.github.io">lanyon</a>
+      <br/>
+      <a href="{{ site.url }}/atom.xml">rss feed</a> 
     </p>
   </div>
 </div>

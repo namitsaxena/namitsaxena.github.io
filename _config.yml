@@ -11,14 +11,14 @@ permalink:           pretty
 author:
   name:              Namit Saxena
   url:               http://www.namitsaxena.com
-  email:             info@namitsaxena.com
-  description:       Personal Blog
-  gravatar:          000112233 # md5 hash of your email address	  
+  email:             mailto:info@namitsaxena.com
+  description:       Namit Saxena
+  gravatar:          c925447afa22f9f372d102c27bcd6029 # md5 hash of your email address	  
   contact:
     linkedin:        https://www.linkedin.com/in/namitsaxena
     github:          https://github.com/namitsaxena
     twitter:         https://twitter.com/namitsaxena
-    email:           info@namitsaxena.com
+    email:           mailto:info@namitsaxena.com
 
 # Gems
 plugins:
