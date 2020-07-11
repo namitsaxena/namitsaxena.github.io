@@ -1,7 +1,6 @@
 ---
 layout: page
 title: AWS CLI commands cheatsheet
-categories: [tech]
 tags: [aws, tech, cheatsheet]
 ---
 

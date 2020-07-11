@@ -7,7 +7,7 @@ layout: default
   and tags
 -->
 <div class="posts">
-  {% for post in site.categories.notes %}
+  {% for post in site.notes %}
   <div class="post">
     <h1 class="post-title">
       <a href="{{ post.url | absolute_url }}">

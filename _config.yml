@@ -20,6 +20,10 @@ author:
     twitter:         https://twitter.com/namitsaxena
     email:           mailto:info@namitsaxena.com
 
+collections:
+  notes:
+    output: true
+    permalink: /notes/:path/
 # Gems
 plugins:
   - jekyll-paginate
