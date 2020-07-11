@@ -39,7 +39,7 @@ nav:
   Website:
     - 'http://www.namitsaxena.com'
   Blog:           
-    - '/summary/'
+    - '/full/'
     - { Categories: '/categories/' }
     - { Tags: '/tags/' }
   Quick Links:

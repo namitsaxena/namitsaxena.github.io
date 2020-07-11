@@ -1,6 +1,5 @@
 ---
 layout: default
-title: blog
 ---
 <div class="posts">
   {% for post in site.categories.blog %}
@@ -13,24 +12,9 @@ title: blog
 
     <span class="post-date">{{ post.date | date_to_string }}</span>
 
-    {{ post.content }}
+    {{ post.excerpt }}
+    <BR/>
+    <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
   </div>
   {% endfor %}
 </div>
-
-<!-- <H4>Blogs</H4>
-  <div class="tags-expo-section">
-    {% for post in site.categories.blog %}
-	    <article class="post">
-
-	      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-
-	      <div class="entry">
-	        {{ post.excerpt }}
-	      </div>
-
-	      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-	    </article>
-    {% endfor %}
-  </div>
- -->
