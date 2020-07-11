@@ -1,10 +1,9 @@
 ---
 layout: default
-title: Home
+title: blog
 ---
-
 <div class="posts">
-  {% for post in paginator.posts %}
+  {% for post in site.categories.blog %}
   <div class="post">
     <h1 class="post-title">
       <a href="{{ post.url | absolute_url }}">
@@ -19,19 +18,19 @@ title: Home
   {% endfor %}
 </div>
 
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="{{ paginator.next_page_path | absolute_url }}">Older</a>
-  {% else %}
-    <span class="pagination-item older">Older</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="{{ '/' | absolute_url }}">Newer</a>
-    {% else %}
-      <a class="pagination-item newer" href="{{ paginator.previous_page_path | absolute_url }}">Newer</a>
-    {% endif %}
-  {% else %}
-    <span class="pagination-item newer">Newer</span>
-  {% endif %}
-</div>
+<!-- <H4>Blogs</H4>
+  <div class="tags-expo-section">
+    {% for post in site.categories.blog %}
+	    <article class="post">
+
+	      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+
+	      <div class="entry">
+	        {{ post.excerpt }}
+	      </div>
+
+	      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+	    </article>
+    {% endfor %}
+  </div>
+ -->
