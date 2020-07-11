@@ -3,6 +3,7 @@ layout: page
 title: Git Cheatsheet
 categories: [tech]
 tags: [git, tech, cheatsheet]
+comments: true 
 ---
 
 ### squash commits
