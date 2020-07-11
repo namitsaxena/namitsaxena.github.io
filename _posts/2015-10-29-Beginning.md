@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Namit Saxena
+title: Beginning
 ---
 
 ## Hosted @ GitHub
