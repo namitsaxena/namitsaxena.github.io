@@ -11,9 +11,11 @@ A static blog can easily be hosted in GitHub. Here we will be using [Lanyon](htt
 ## Quick Start
 To get up and running in two minutes, the following steps can be used:
 - Fork https://github.com/poole/lanyon
-- Rename this to: <youraccountname>.github.io
+- Rename this to: youraccountname.github.io
 - Update _config.yml (master branch is default)
   1. Update Name, title, etc
   2. baseUrl needs to be blank("") if this is the default domain
 - Update CNAME to your domain name if you have one, or blank this out
-- Once published, you can access the site on <youraccountname>.github.io (or your domain of you configured it)
+- Once published, you can access the site on youraccountname.github.io (or your domain of you configured it)
+  
+  
