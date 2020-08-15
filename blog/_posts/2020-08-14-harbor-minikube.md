@@ -15,8 +15,13 @@ comments: true
 * virtualbox
 
 ## Installation
-* start minikube using virtualbox driver: _minikube start --vm-driver virtualbox_
-  * Enable ingress on minikube: _minikube addons enable ingress_
+* start minikube using virtualbox driver, and enable ingress
+  ```
+  minikube start --vm-driver virtualbox
+  minikube addons enable ingress
+  # to see the list of add ons
+  minikube addons list
+  ```
   * Because we will be setting up harbor services using ingress, we need the virtualbox driver
   * If we were using NodePort, we could have used docker driver
 * Clone [harbor repo](https://github.com/goharbor/harbor-helm), and cd to the repo
@@ -80,6 +85,16 @@ kubectl -n harbor get secrets harbor-harbor-ingress -o jsonpath="{.data['ca\.crt
   minikube ssh
   sudo mkdir -p /etc/docker/certs.d/core.harbor.domain
   sudo cp harbor-ca.crt /etc/docker/certs.d/core.harbor.domain
+  
+  # exit back to mac
+  exit
+  
+  ```
+* configure notary certificates
+  Same ingress is used by the notary/Docker Content Trust as well, and the certificate needs to be configured for it's use as well (more on this below). 
+  We will be configuring this on the docker client side (ie mac)
+  ```
+  | => cp harbor-ca.crt /Users/admin/.docker/tls/notary.harbor.domain
   ```
 
 * Now test the client by logging in, and pushing an image
