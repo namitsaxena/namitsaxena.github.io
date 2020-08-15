@@ -90,7 +90,7 @@ kubectl -n harbor get secrets harbor-harbor-ingress -o jsonpath="{.data['ca\.crt
   exit
   
   ```
-* configure notary certificates
+* configure notary certificates (optional - required only if notary or DCT is needed)
   Same ingress is used by the notary/Docker Content Trust as well, and the certificate needs to be configured for it's use as well (more on this below). 
   We will be configuring this on the docker client side (ie mac)
   ```
@@ -99,9 +99,107 @@ kubectl -n harbor get secrets harbor-harbor-ingress -o jsonpath="{.data['ca\.crt
 
 * Now test the client by logging in, and pushing an image
   ```
-  docker login core.harbor.domain --username=admin --password Harbor12345
+  | => docker login core.harbor.domain --username=admin --password Harbor12345
+  WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+  Login Succeeded
+
   docker pull hello-world
-  docker tag hello-world core.harbor.domain/library/hello-world:1
-  docker push core.harbor.domain/library/hello-world:1
+  
+  | => docker tag hello-world core.harbor.domain/library/hello-world:1
+  | => docker push core.harbor.domain/library/hello-world:1
+  The push refers to repository [core.harbor.domain/library/hello-world]
+  9c27e219663c: Layer already exists 
+  1: digest: sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042 size: 525
+
+  ```
+
+## Using Docker Content Trust
+* The certificates required for notary have already been setup (see above)
+* We can enable DCT by configuring certain environment variables
+  ```
+  export DOCKER_CONTENT_TRUST=1
+  export DOCKER_CONTENT_TRUST_SERVER=https://notary.harbor.domain
+  ```
+* Now we can sign and push an image. While there are other advanced ways of doing this, we will be using a simple push 
+  ```
+  # Running in debug mode to see more details
+  # also in our case we already have root keys created and loaded
+  | => docker -l=debug push core.harbor.domain/library/hello-world:1
+  The push refers to repository [core.harbor.domain/library/hello-world]
+  9c27e219663c: Layer already exists 
+  1: digest: sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042 size: 525
+  Signing and pushing trust metadata
+  DEBU[0001] reading certificate directory: /Users/admin/.docker/tls/notary.harbor.domain 
+  DEBU[0001] crt: /Users/admin/.docker/tls/notary.harbor.domain/core_harbor_domain_ca_root.crt 
+  DEBU[0001] crt: /Users/admin/.docker/tls/notary.harbor.domain/harbor-ca.crt 
+  DEBU[0001] crt: /Users/admin/.docker/tls/notary.harbor.domain/ingress.tls.crt 
+  DEBU[0002] No yubikey found, using alternative key storage: no library found 
+  DEBU[0002] Making dir path: /Users/admin/.docker/trust/tuf/core.harbor.domain/library/hello-world/changelist 
+  DEBU[0002] received HTTP status 404 when requesting root. 
+  DEBU[0002] No yubikey found, using alternative key storage: no library found 
+  DEBU[0002] No yubikey found, using alternative key storage: no library found 
+  Enter passphrase for root key with ID c7c1603: 
+  DEBU[0009] generated ECDSA key with keyID: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+  DEBU[0009] generated new ecdsa key for role: targets and keyID: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+  Enter passphrase for new repository key with ID d95c306:
+  Repeat passphrase for new repository key with ID d95c306:
+  DEBU[0018] got remote timestamp ecdsa key with keyID: abd474e548219093df0ceb233ba4196a7e8d810d1643b515a68e08828c85f732 
+  DEBU[0018] got remote snapshot ecdsa key with keyID: ecdd284ddd45ad506594ee4069abfc18bbb01b85aa2c06384e52a115b5514343 
+  DEBU[0018] generating new snapshot...                   
+  DEBU[0018] Saving changes to Trusted Collection.        
+  DEBU[0018] signing root...                              
+  DEBU[0018] sign called with 1/1 required keys           
+  DEBU[0018] No yubikey found, using alternative key storage: no library found 
+  DEBU[0018] sign called with 0/0 required keys           
+  DEBU[0018] sign targets called for role targets         
+  DEBU[0018] sign called with 1/1 required keys           
+  DEBU[0018] No yubikey found, using alternative key storage: no library found 
+  DEBU[0018] sign called with 0/0 required keys           
+  Finished initializing "core.harbor.domain/library/hello-world"
+  DEBU[0018] Adding target "1" with sha256 "90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042" and size 525 bytes. 
+  DEBU[0018] entered ValidateRoot with dns: core.harbor.domain/library/hello-world 
+  DEBU[0018] found the following root keys: [c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286] 
+  DEBU[0018] found 1 valid leaf certificates for core.harbor.domain/library/hello-world: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] found 1 leaf certs, of which 1 are valid leaf certs for core.harbor.domain/library/hello-world 
+  DEBU[0018] checking root against trust_pinning config for core.harbor.domain/library/hello-world 
+  DEBU[0018] checking trust-pinning for cert: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018]  role has key IDs: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] verifying signature for key ID: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] root validation succeeded for core.harbor.domain/library/hello-world 
+  DEBU[0018] entered ValidateRoot with dns: core.harbor.domain/library/hello-world 
+  DEBU[0018] found the following root keys: [c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286] 
+  DEBU[0018] found 1 valid leaf certificates for core.harbor.domain/library/hello-world: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] found 1 leaf certs, of which 1 are valid leaf certs for core.harbor.domain/library/hello-world 
+  DEBU[0018] checking root against trust_pinning config for core.harbor.domain/library/hello-world 
+  DEBU[0018] checking trust-pinning for cert: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018]  role has key IDs: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] verifying signature for key ID: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] root validation succeeded for core.harbor.domain/library/hello-world 
+  DEBU[0018] received HTTP status 404 when requesting root. 
+  DEBU[0018] Loading trusted collection.                  
+  DEBU[0018] entered ValidateRoot with dns: core.harbor.domain/library/hello-world 
+  DEBU[0018] found the following root keys: [c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286] 
+  DEBU[0018] found 1 valid leaf certificates for core.harbor.domain/library/hello-world: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] found 1 leaf certs, of which 1 are valid leaf certs for core.harbor.domain/library/hello-world 
+  DEBU[0018] checking root against trust_pinning config for core.harbor.domain/library/hello-world 
+  DEBU[0018] checking trust-pinning for cert: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018]  role has key IDs: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] verifying signature for key ID: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+  DEBU[0018] root validation succeeded for core.harbor.domain/library/hello-world 
+  DEBU[0018] targets role has key IDs: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+  DEBU[0018] verifying signature for key ID: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+  DEBU[0018] changelist add: 1                            
+  DEBU[0018] No yubikey found, using alternative key storage: no library found 
+  DEBU[0018] applied 1 change(s)                          
+  DEBU[0018] sign targets called for role targets         
+  DEBU[0018] sign called with 1/1 required keys           
+  DEBU[0018] No yubikey found, using alternative key storage: no library found 
+  DEBU[0018] sign called with 0/0 required keys           
+  DEBU[0018] generating new snapshot...                   
+  DEBU[0018] signing snapshot...                          
+  DEBU[0018] sign called with 1/1 required keys           
+  DEBU[0018] No yubikey found, using alternative key storage: no library found 
+  DEBU[0018] Client does not have the key to sign snapshot. Assuming that server should sign the snapshot. 
+  Successfully signed core.harbor.domain/library/hello-world:1
 
   ```
