@@ -1,13 +1,13 @@
 ---
 layout: page
-title: Running Harbor Container registry on kubernetes(minikube)
+title: Running Harbor container registry on Kubernetes
 categories: [tech]
 tags: [tech, kubernetes, harbor]
 comments: true
 ---
 
 ## Overview
-[Harbor](https://goharbor.io/) is relatively new and popular container registry. If you are running your own kubernetes/container environment, then you may want to run your own private registry. This covers the basic deployment process using minikube.
+[Harbor](https://goharbor.io/) is relatively new and popular container registry. If you are running your own kubernetes/container environment, then using this as a private registry may be a good choice. This covers the basic deployment process using minikube.
 
 ## Prerequisites
 * kubernetes setup including, minikube and kubectl
