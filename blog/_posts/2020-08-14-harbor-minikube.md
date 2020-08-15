@@ -203,3 +203,63 @@ kubectl -n harbor get secrets harbor-harbor-ingress -o jsonpath="{.data['ca\.crt
   Successfully signed core.harbor.domain/library/hello-world:1
 
   ```
+* We can now verify that the image has been signed (notice that the repository key is the same that was created above while pushing)
+  ```
+  | => docker trust inspect core.harbor.domain/library/hello-world --pretty
+
+  Signatures for core.harbor.domain/library/hello-world
+
+  SIGNED TAG          DIGEST                                                             SIGNERS
+  1                   90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042   (Repo Admin)
+
+  Administrative keys for core.harbor.domain/library/hello-world
+
+    Repository Key:	d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7
+    Root Key:	c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286
+  ```
+
+## Notary Client
+  * We can also perform advanced notary operation using the [notary](https://github.com/theupdateframework/notary) client. 
+  ### Configuring the notary client
+    * Download the notary client from [the official releases page](https://github.com/theupdateframework/notary/releases). These are pre-compiled images so just download, make executable and add to the path
+    * Setup the configuration file (all arguments can also be supplied on the command line but this makes it easier). The harbor certificate file is the same we created above:
+    ```
+    # ignore trust pinning settings for now
+    # 
+    | => mkdir ~/.notary directory
+    | => cat ~/.notary/config.json 
+    {
+      "trust_dir" : "~/.docker/trust",
+      "remote_server": {
+      "url": "https://notary.harbor.domain",
+      "root_ca": "/Users/admin/github/harbor-helm/harbor-ca.crt"
+    },
+    "trust_pinning": {
+      "certs": {
+        "docker.com/notary": ["49cf5c6404a35fa41d5a5aa2ce539dfee0d7a2176d0da488914a38603b1f4292"]
+      }
+    }
+   }
+  ```
+
+### Using the notary client
+  * This only provides some basic sample commands, for details on how to use, please see the notary documentation
+  * We can verify the signatures using the notary client
+    ```
+    | => notary list core.harbor.domain/library/hello-world
+    NAME    DIGEST                                                              SIZE (BYTES)           ROLE
+     ----    ------                                                              ------------    ----
+    1       90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042    525             targets
+    ```
+  * To initialize a new repo
+    ```
+    | => notary init core.harbor.domain/library/ex1
+    Root key found, using: c7c1603c6f89a72bc80165c11617483fb75480f5fe54a1bf911c3d3441ba0474
+    Enter passphrase for root key with ID c7c1603: 
+    Enter passphrase for new targets key with ID a03454d: 
+    Repeat passphrase for new targets key with ID a03454d: 
+    Enter passphrase for new snapshot key with ID 6bd9be7: 
+    Repeat passphrase for new snapshot key with ID 6bd9be7: 
+    Enter username: admin
+    Enter password: 
+    ```
