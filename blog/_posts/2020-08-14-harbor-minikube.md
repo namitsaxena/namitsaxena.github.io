@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Running Harbor container registry on Kubernetes (with Docker Content Trust)
+title: Running Harbor container registry on Kubernetes
 categories: [tech]
 tags: [tech, kubernetes, minikube, harbor, helm, docker, DCT, notary]
 comments: true
