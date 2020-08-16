@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Running Harbor container registry on Kubernetes
+title: Running Harbor container registry on Kubernetes (with Docker Content Trust)
 categories: [tech]
-tags: [tech, kubernetes, harbor]
+tags: [tech, kubernetes, minikube, harbor, helm, docker, DCT, notary]
 comments: true
 ---
 
@@ -217,6 +217,10 @@ kubectl -n harbor get secrets harbor-harbor-ingress -o jsonpath="{.data['ca\.crt
     Repository Key:	d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7
     Root Key:	c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286
   ```
+
+* References
+  * [Using Trusted Image](https://docs.docker.com/engine/security/trust/)
+  [Content trust in Docker | Docker Documentation (docs.docker.com)](https://docs.docker.com/engine/security/trust/content_trust/)
 
 ## Notary Client
   * We can also perform advanced notary operation using the [notary](https://github.com/theupdateframework/notary) client. 
