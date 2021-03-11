@@ -13,3 +13,5 @@ published: true
 
 ### Cheatsheets
 * [AWS CLI](http://pages.namitsaxena.com/notes/aws_cli/)
+* [Kubernetes Cheatsheet: kubectl - basic configuration](http://blog.namitsaxena.com/notes/kubernetes-cheat-sheet-basic-configuration/)
+* [Kubernetes Cheatsheet: kubectl - managing objects](http://blog.namitsaxena.com/notes/kubernetes_cheatsheet_2/)
