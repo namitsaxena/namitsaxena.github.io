@@ -63,21 +63,21 @@ Resources that cannot be handled by kubectl cli(imperative commands) but need sp
         * Kubernetes binds PVC with best available PV based on storage class, capacity, volume and access mode, etc
         * Pod Volume uses PVC (which in turn is bound to PV) - see above
     * Misc
-        * hostPath: Kubernetes supports hostPath for development and testing on a single-node cluster. A hostPath PersistentVolume uses a file or directory on the Node to emulate network-attached storage. (Doc)
+        * hostPath: Kubernetes supports hostPath for development and testing on a single-node cluster. A hostPath PersistentVolume uses a file or directory on the Node to emulate network-attached storage. ([Doc](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume))
             * for two pods to use the same hostPath volume (say even in PV), they must be scheduled on the same nodes
 * ### Pod Environment Variables
     * Create SPECIFIC Env variables: 
         * pod.spec.containers.env -> name(name of env variable) and value (directly specify)
             * pod.spec.containers.env.valueFrom
-                * pod.spec.containers.env.valueFrom.configMapKeyRef (Doc)
+                * pod.spec.containers.env.valueFrom.configMapKeyRef ([Doc](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-with-data-from-multiple-configmaps))
                     * name(name of CM), key(key name in CM), name of env variable is define above in env
-                * pod.spec.containers.env.valueFrom.secretKeyRef (Doc)
+                * pod.spec.containers.env.valueFrom.secretKeyRef ([Doc](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables))
                     * name(name of Secret), key(key name in Secret)
     * Create ALL env variables from some source
         * pod.spec.containers.envFrom
-            * pod.spec.containers.envFrom.configMapRef (Doc)
+            * pod.spec.containers.envFrom.configMapRef ([Doc](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables))
                 * name (config map name)
-            * pod.spec.containers.envFrom.secretRef (Doc)
+            * pod.spec.containers.envFrom.secretRef ([Doc](https://kubernetes.io/docs/concepts/configuration/secret/#use-case-as-container-environment-variables))
                 * name (secret name)
 * ### Pod - Probes
     * Types:
@@ -111,8 +111,8 @@ Resources that cannot be handled by kubectl cli(imperative commands) but need sp
             * maxUnavailable: maximum number of pods that can be unavailable during the update(number/%)
 * ### Scaling
     * kubectl autoscale (can be used with Deployment, ReplicaSet, StatefulSet, or ReplicationController) - details in objects cheatsheet
-        * creates HPA
+        * creates [HPA](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 * ### Services
-    * svc.spec.type (Doc) 
+    * svc.spec.type ([Doc](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service)) 
 * ### Ingress
 * ### Network Policies
