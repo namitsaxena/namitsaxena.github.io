@@ -1,8 +1,13 @@
 ---
 layout: page
-categories: [tech]
+categories:
+  - tech
 title: kubectl cheat sheet - managing resources (declarative)
-tags: [kubernetes, tech, cheatsheet]
+tags:
+  - kubernetes
+  - tech
+  - cheatsheet
+published: true
 ---
 
 Resources that cannot be handled by kubectl cli(imperative commands) but need spec updates in yaml(declarative)
@@ -15,9 +20,9 @@ Resources that cannot be handled by kubectl cli(imperative commands) but need sp
         * parallelism: 5
 * ### Pod
     * securityContext at 2 levels
-        * pod.spec.securityContext (Doc): The security settings that you specify for a Pod apply to all Containers in the Pod.
+        * pod.spec.securityContext ([Doc](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod)): The security settings that you specify for a Pod apply to all Containers in the Pod.
             * fsGroup, runAsUser, runAsGroup
-        * pod.spec.containers.securityContext (Doc): apply only to the individual Container, and they override settings made at the Pod level when there is overlap
+        * pod.spec.containers.securityContext ([Doc](https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/pods/security/security-context-2.yaml)): apply only to the individual Container, and they override settings made at the Pod level when there is overlap
             * runAsUser, runAsGroup, capabilities
     * pod.spec.serviceAccountName
     * pod.spec.containers.resources (also supported by imperative command - kubectl run)
@@ -25,27 +30,27 @@ Resources that cannot be handled by kubectl cli(imperative commands) but need sp
             * memory, cpu
         * pod.spec.containers.resources.limits: pod can consume more than request if node has available resources but it can not use more than the limit
             * memory, cpu
-        * limitRange.spec.limits : default memory requests and limits for a namespace (Doc)
+        * limitRange.spec.limits : default memory requests and limits for a namespace ([Doc](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/#create-a-limitrange-and-a-pod))
     * ports:
         * pod.spec.containers.ports.containerPort
             * containerPort as part of the pod definition is only for informational purposes.
                 * Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default "0.0.0.0" address inside a container will be accessible from the network. 
                 * Also, as noticed, if a pod/deployment is created and then ‘expose’ is used to create a service, it gets created and is accessible. However no container port is configured (this can be see by creating and pods/deployment and using expose to create a service)
-            * Should I configure the ports in the Kubernetes deployment? | by ismail yenigül | FAUN | Medium[medium.com]  
+            * [Should I configure the ports in the Kubernetes deployment?](https://medium.com/faun/should-i-configure-the-ports-in-kubernetes-deployment-c6b3817e495) - Medium
 * ### Pod Volumes
     * pod.spec.volumes
         * name (common to all types)
-        * pod.spec.volumes.hostPath (Doc) - path
-        * emptyDir: {} (Doc)
+        * pod.spec.volumes.hostPath ([Doc](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath)) - path
+        * emptyDir: {} ([Doc](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir))
         * ConfigMaps
             * pod.spec.volumes.configMap
-                * name  (config map name) (Doc) - configure all keys 
-            * pod.spec.volumes.configMap.items (Doc) - configure specific keys 
+                * name  (config map name) ([Doc](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#populate-a-volume-with-data-stored-in-a-configmap)) - configure all keys 
+            * pod.spec.volumes.configMap.items ([Doc](https://kubernetes.io/docs/concepts/storage/volumes/#configmap)) - configure specific keys 
                 * key, path
         * Secrets
             * pod.spec.volumes.secret
-                * secretName (Doc) - all keys Each key in the secret data map becomes the filename under mountPath.
-            * pod.spec.volumes.secret.items (Doc) - configure specific keys
+                * secretName ([Doc](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets)) - all keys Each key in the secret data map becomes the filename under mountPath.
+            * pod.spec.volumes.secret.items ([Doc](https://kubernetes.io/docs/concepts/configuration/secret/#projection-of-secret-keys-to-specific-paths)) - configure specific keys
                 * key, path
         * Persistent Volume Claims
             * pod.spec.volumes.persistentVolumeClaim
