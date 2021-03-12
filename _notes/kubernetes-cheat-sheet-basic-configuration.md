@@ -93,4 +93,4 @@
             * Starting to serve on 127.0.0.1:8001
         * curl  127.0.0.1:8001 (this will list all the valid version paths. Ex: /apis/apps/v1)
     * Using kubectl to run api
-        *  kubectl get --raw=/apis/apps/v1/deployments
+        *  ```kubectl get --raw=/apis/apps/v1/deployments```
