@@ -10,7 +10,7 @@
                     * alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
         * Find current namespace - but these will not show the namespace if it’s not set explicitly (will default to ‘default’)
             * ```kubectl config view --minify | grep namespace```
-            * kubectl config view --minify --output 'jsonpath={..namespace}'
+            * ```kubectl config view --minify --output 'jsonpath={..namespace}'```
         * List and Change Context
             * ```kubectl config get-contexts```
             * Use a different context
@@ -20,7 +20,7 @@
     * changing verbosity
         *  --v 6 (--v 6 option increases the logging level enough to let you see the requests kubectl is sending to the API server.)
     * patch: useful for modifying a single property or a limited number of properties of a resource without having to edit its definition in a text editor
-        * kubectl patch deployment kubia -p '{"spec": {"minReadySeconds": 10}}'
+        * ```kubectl patch deployment kubia -p '{"spec": {"minReadySeconds": 10}}'```
     * kubectl create / replace / apply - [difference](https://stackoverflow.com/questions/47369351/kubectl-apply-vs-kubectl-create)
         * create/replace - imperative approach - will create the resource (or throw an error if it exists)
         * apply - declarative approach - will create if needed 
@@ -38,17 +38,17 @@
             * ```kubectl explain pods --recursive | grep envFrom -A3``` (grep 3 lines underneath)
 * **kubectl querying output**
     * [JSONPath Support](https://kubernetes.io/docs/reference/kubectl/jsonpath/)
-        * Ex: kg secret/sa-ro-token-h5rgr -n sa-test -o jsonpath='{.data.token}'
-        * kubectl get pods -o=jsonpath='{.items[0].metadata.name}'
+        * Ex: ```kg secret/sa-ro-token-h5rgr -n sa-test -o jsonpath='{.data.token}'```
+        * ```kubectl get pods -o=jsonpath='{.items[0].metadata.name}'```
         * Displaying multiple fields
-            * kubectl get pods -o=jsonpath="{.items[*].metadata['.name','.namespace']}"
-            * kubectl get pods -o=jsonpath="{range .items[*]}{.metadata.name}{\"\t\"}{.metadata.namespace}{\"\n\"}{end}"
+            * ```kubectl get pods -o=jsonpath="{.items[*].metadata['.name','.namespace']}"```
+            * ```kubectl get pods -o=jsonpath="{range .items[*]}{.metadata.name}{\"\t\"}{.metadata.namespace}{\"\n\"}{end}"```
                 * same as above but with formatting
-            * kubectl get po -o jsonpath='{range .items[*]}{.metadata.name},{.spec.containers[0].image}{"\n"}{end}'
-                * Same as above: kubectl get po -o jsonpath="{range .items[*]}{.metadata.name},{.spec.containers[0].image}{'\n'}{end}”
+            * ```kubectl get po -o jsonpath='{range .items[*]}{.metadata.name},{.spec.containers[0].image}{"\n"}{end}' ```
+                * Same as above: ```kubectl get po -o jsonpath="{range .items[*]}{.metadata.name},{.spec.containers[0].image}{'\n'}{end}” ```
         * Custom columns can also take multiple jsonpaths and display them as fields
-        * kubectl get pod  -o custom-columns=CONTAINER:.spec.containers[0].name,IMAGE:.spec.containers[0].image
-            * kg pod busybox -o jsonpath='{.spec.containers[0].name}’ (CONTAINER column above is same as this jsonpath)
+        * ```kubectl get pod  -o custom-columns=CONTAINER:.spec.containers[0].name,IMAGE:.spec.containers[0].image```
+            * ```kg pod busybox -o jsonpath='{.spec.containers[0].name}’``` (CONTAINER column above is same as this jsonpath)
             * The json is from the pod spec - doesn’t start with .items even when displaying multiple pods
             * ```kg pods -o custom-columns=APP:.metadata.labels.app``` ( print value of label ‘app’ ; .items[*] is NOT needed)
 * **Logs & Events**
@@ -77,7 +77,7 @@
                 * KIND:     ReplicaSet
                 * VERSION:  apps/v1
             * list of all the resource types and their latest supported version
-                * for kind in $(kubectl api-resources | tail +2 | awk '{ print $1 }'); do kubectl explain $kind; done | grep -e "KIND:" -e "VERSION:"
+                * ```for kind in `kubectl api-resources | tail +2 | awk '{ print $1 }'`; do kubectl explain $kind; done | grep -e "KIND:" -e "VERSION:"```
         * Alternative way: What version an object supports can be determined using~
             * ```kubectl api-resources``` (Ex: for deployments, the api-group is apps)
             * ```kubectl api-versions``` (Ex: has 'apps' amongst others)
