@@ -1,3 +1,11 @@
+---
+layout: page
+title: Terraform Provider Mirror Setup on GCS
+categories: [tech, cloud]
+tags: [terraform, tech, cloud]
+comments: true 
+---
+
 ## Terraform Provider Mirror Setup in Google Cloud Storage Bucket
 
 This document covers the basic steps for creating a terraform provider mirror in a Google GCS bucket.
@@ -17,11 +25,11 @@ This document covers the basic steps for creating a terraform provider mirror in
      ```
    * Verify
      ```
-	| terraform providers
+	 | terraform providers
 
-	Providers required by configuration:
-	.
-	└── provider[registry.terraform.io/hashicorp/google]   
+	 Providers required by configuration:
+	 .
+	 └── provider[registry.terraform.io/hashicorp/google]   
      ```
 3. Now create a local mirror. The command below will copy all providers for the above module to this local directory mirror. See [command reference](https://www.terraform.io/cli/commands/providers/mirror)
    ```
@@ -94,7 +102,7 @@ This document covers the basic steps for creating a terraform provider mirror in
 	2022-02-01T21:24:34.583-0600 [TRACE] Stdout is a terminal of width 239
 	2022-02-01T21:24:34.583-0600 [TRACE] Stderr is a terminal of width 239
 	2022-02-01T21:24:34.583-0600 [TRACE] Stdin is a terminal
-	2022-02-01T21:24:34.583-0600 [DEBUG] Attempting to open CLI config file: /Users/admin/Documents/docs/docs_misc/technical/code/github/terraform-tutorial/.terraformrctemp
+	2022-02-01T21:24:34.583-0600 [DEBUG] Attempting to open CLI config file: 	 /Users/admin/Documents/docs/docs_misc/technical/code/github/terraform-tutorial/.terraformrctemp
 	2022-02-01T21:24:34.583-0600 [INFO]  Loading CLI configuration from /Users/admin/Documents/docs/docs_misc/technical/code/github/terraform-tutorial/.terraformrctemp
 	2022-02-01T21:24:34.585-0600 [DEBUG] Not reading CLI config directory because config location is overridden by environment variable
 	2022-02-01T21:24:34.585-0600 [DEBUG] Explicit provider installation configuration is set
