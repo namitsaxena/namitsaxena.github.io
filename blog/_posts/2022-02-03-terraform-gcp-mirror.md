@@ -86,8 +86,8 @@ This article covers the basic steps for creating a terraform provider mirror in 
 	 }
      ```  
 6. Try the remote mirror
-    * Update the CFG file to use the remote bucket mirror
-    ```
+   * Update the CFG file to use the remote bucket mirror
+   ```
 	| cat .terraformrctemp 
 	provider_installation {
 	  network_mirror {
@@ -95,10 +95,10 @@ This article covers the basic steps for creating a terraform provider mirror in 
 	    include = ["hashicorp/google"]
 	  }
 	}
-    ```
+   ```
    
-    * test
-    ```
+   * test
+   ```
     | terraform init
     2022-02-01T21:24:34.582-0600 [INFO]  Terraform version: 1.1.4
     2022-02-01T21:24:34.582-0600 [INFO]  Go runtime version: go1.17.2
@@ -152,5 +152,5 @@ This article covers the basic steps for creating a terraform provider mirror in 
     If you ever set or change modules or backend configuration for Terraform,
     rerun this command to reinitialize your working directory. If you forget, other
     commands will detect it and remind you to do so if necessary.   
-    ```   
-   Note that it downloaded from our GCS mirror
+  ```   
+  Note that it downloaded from our GCS mirror
