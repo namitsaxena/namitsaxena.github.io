@@ -87,37 +87,18 @@ This article covers the basic steps for creating a terraform provider mirror in 
      ```  
 6. Try the remote mirror
    * Update the CFG file to use the remote bucket mirror
-   ```
-	| cat .terraformrctemp 
-	provider_installation {
-	  network_mirror {
-	    url    = "https://storage.googleapis.com/terraform-registry/mirror/"
-	    include = ["hashicorp/google"]
-	  }
-	}
-   ```
+     ```
+	   | cat .terraformrctemp 
+	   provider_installation {
+	       network_mirror {
+	       url    = "https://storage.googleapis.com/terraform-registry/mirror/"
+	       include = ["hashicorp/google"]
+	     }
+	   }
+     ```
    
    * test
      ```
      | terraform init
-     Initializing provider plugins...
-     - Reusing previous version of hashicorp/google from the dependency lock file
-     2022-02-01T21:24:34.872-0600 [DEBUG] Querying available versions of provider registry.terraform.io/hashicorp/google at network mirror https://storage.googleapis.com/terraform-registry/mirror/
-     2022-02-01T21:24:34.873-0600 [DEBUG] GET https://storage.googleapis.com/terraform-registry/mirror/registry.terraform.io/hashicorp/google/index.json
-     2022-02-01T21:24:34.876-0600 [TRACE] HTTP client GET request to https://storage.googleapis.com/terraform-registry/mirror/registry.terraform.io/hashicorp/google/index.json
-     2022-02-01T21:24:35.118-0600 [TRACE] providercache.fillMetaCache: scanning directory .terraform/providers
-     2022-02-01T21:24:35.118-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/google v4.9.0 for darwin_amd64 at .terraform/providers/registry.terraform.io/hashicorp/google/4.9.0/darwin_amd64
-     2022-02-01T21:24:35.118-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/google/4.9.0/darwin_amd64 as a candidate package for registry.terraform.io/hashicorp/google 4.9.0
-     - Using previously-installed hashicorp/google v4.9.0
-
-     Terraform has been successfully initialized!
-
-     You may now begin working with Terraform. Try running "terraform plan" to see
-     any changes that are required for your infrastructure. All Terraform commands
-     should now work.
-
-     If you ever set or change modules or backend configuration for Terraform,
-     rerun this command to reinitialize your working directory. If you forget, other
-     commands will detect it and remind you to do so if necessary.   
      ```   
      Note that it downloaded from our GCS mirror
