@@ -1,12 +1,16 @@
 ---
 layout: page
 title: Terraform Provider Mirror Setup on GCS
-categories: [tech, cloud]
-tags: [terraform, tech, cloud]
-comments: true 
+categories:
+  - tech
+  - cloud
+tags:
+  - terraform
+  - tech
+  - cloud
+comments: true
+published: true
 ---
-
-## Terraform Provider Mirror Setup in Google Cloud Storage Bucket
 
 This document covers the basic steps for creating a terraform provider mirror in a Google GCS bucket.
 
