@@ -12,7 +12,7 @@ comments: true
 published: true
 ---
 
-This document covers the basic steps for creating a terraform provider mirror in a Google GCS bucket.
+This article covers the basic steps for creating a terraform provider mirror in a Google GCS bucket. For those of you who are not familiar with terraform can read more about it at [www.terraform.io](https://www.terraform.io/) and the [provider documentation](https://www.terraform.io/registry/providers). 
 
 1. Setup an example tf file with just the providers. See [Provider Configuration](https://www.terraform.io/language/providers/configuration)
    ```
