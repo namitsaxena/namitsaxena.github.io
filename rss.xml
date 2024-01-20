@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title></title>
+        <link>undefined</link>
+        <description>undefined</description>
+        <lastBuildDate>Sat, 20 Jan 2024 23:50:16 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[Large Language Models (LLMs)]]></title>
+            <guid>a00e5d71e3f240c38c410c1848d39f8f</guid>
+            <pubDate>Wed, 01 Nov 2023 03:09:14 GMT</pubDate>
+            <content:encoded><![CDATA[<ul>
+<li>
+<h2 id="concepts">Concepts</h2>
+<ul>
+<li>
+<h3 id="generative-ai">Generative AI</h3>
+<ul>
+<li>Generative AI is called generative because the AI creates something that didn’t previously exist. That’s what makes it different from <strong>discriminative AI</strong>, which draws distinctions between different kinds of input. To say it differently, discriminative AI tries to answer a question like “Is this image a drawing of a rabbit or a lion?” whereas generative AI responds to prompts like “Draw me a picture of a lion and a rabbit sitting next to each other.”<a title="https://www.infoworld.com/article/3689973/what-is-generative-ai-artificial-intelligence-that-creates.html" href="https://www.infoworld.com/article/3689973/what-is-generative-ai-artificial-intelligence-that-creates.html">[www.infoworld.com]</a></li>
+</ul>
+</li>
+<li>
+<h3 id="models">Models</h3>
+<ul>
+<li>AI model is a tool or algorithm which is based on a certain data set through which it can arrive at a decision – all without the need for human interference in the decision-making process.
+<ul>
+<li>A deep learning model, or a DL model, is a neural network that has been trained to learn how to perform a task, such as recognizing objects in digital images and videos, or understanding human speech. Deep learning models are trained by using large sets of data and algorithms that enable the model to learn how to perform the task. The more data the model is trained on, the better it can learn to perform the task.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Model <strong>Parameters Count</strong> (“Parameters”): Model parameter count or “number of parameters” refers to the number of weights in all layers of a model. As a general rule, the more parameters a model has, the more capable and accurate it is assumed to be,[<a title="https://sambanova.ai/blog/generative-ai-terms/" href="https://sambanova.ai/blog/generative-ai-terms/">sambanova.ai</a>]</li>
+<li><strong>Prompt</strong>: An interface where a user can interact with a generative AI model using natural language. Within these prompt interfaces, a user can make a specific request of a model such as “Write a paragraph summary of generative AI”, or “Draw a picture with horses running through a field with a forest in the background, during the spring”[<a title="https://sambanova.ai/blog/generative-ai-terms/" href="https://sambanova.ai/blog/generative-ai-terms/">sambanova.ai</a>]
+<ul>
+<li>Giving Large Language Models Context | by Simon Attard | Medium[<a title="https://medium.com/@simon_attard/giving-large-language-models-context-2d1956a6a017" href="https://medium.com/@simon_attard/giving-large-language-models-context-2d1956a6a017">medium.com</a>]</li>
+</ul>
+</li>
+<li>Fine Tuning</li>
+<li>Application Architecture
+<ul>
+<li><a title="https://a16z.com/emerging-architectures-for-llm-applications/" href="https://a16z.com/emerging-architectures-for-llm-applications/">Emerging Architectures for LLM Applications | Andreessen Horowitz[a16z.com]</a></li>
+<li><a title="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/" href="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/">LLM Apps Are Mostly Data Pipelines[meltano.com]</a></li>
+</ul>
+</li>
+<li>RAG
+<ul>
+<li><a title="https://stackoverflow.blog/2023/10/18/retrieval-augmented-generation-keeping-llms-relevant-and-current/" href="https://stackoverflow.blog/2023/10/18/retrieval-augmented-generation-keeping-llms-relevant-and-current/">Retrieval augmented generation: Keeping LLMs relevant and current - Stack Overflow[stackoverflow.blog]</a></li>
+<li><strong>In-context learning</strong> (used with RAG) sends context to pre-trained models as part of the prompt at runtime to help it understand more about your question. Whereas fine tuning is further training the pre-trained models to take into account a new set of contextual data then all future prompts go directly to your new iteration of the model.<a title="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/" href="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/">[meltano.com]</a></li>
+<li>Value of LLM if the actual source is the Retrieving data source
+<ul>
+<li>Seems like the natural language processing part and in summarizing/blending</li>
+<li>Can LLM help decipher user query so that the Retriever get more precise information for retrieving information</li>
+<li>remember the similarity search result can be 2 or 3 seperate pages of a document, and you dont want the read the whole the pages. the llm will present only the necessary stuff.<a title="https://www.youtube.com/watch?v=T-D1OfcDW1M&amp;t=291s" href="https://www.youtube.com/watch?v=T-D1OfcDW1M&amp;t=291s">[www.youtube.com]</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>General Topics
+<ul>
+<li>How to use with your own data</li>
+<li>How to use with your own tool
+<ul>
+<li>say run code in response to a query in natural language</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>How to use with your own data
+<ul>
+<li><a title="https://deci.ai/blog/fine-tuning-peft-prompt-engineering-and-rag-which-one-is-right-for-you/" href="https://deci.ai/blog/fine-tuning-peft-prompt-engineering-and-rag-which-one-is-right-for-you/">Full Fine-Tuning, PEFT, Prompt Engineering, or RAG?[deci.ai]</a></li>
+<li><a title="https://medium.com/@younesh.kc/rag-vs-fine-tuning-in-large-language-models-a-comparison-c765b9e21328" href="https://medium.com/@younesh.kc/rag-vs-fine-tuning-in-large-language-models-a-comparison-c765b9e21328">RAG vs. Fine-Tuning in Large Language Models: A Comparison | by younesh kc | Oct, 2023 | Medium[medium.com]</a></li>
+<li><a title="https://www.montecarlodata.com/blog-the-moat-for-enterprise-ai-is-rag-fine-tuning/" href="https://www.montecarlodata.com/blog-the-moat-for-enterprise-ai-is-rag-fine-tuning/">The Moat For Enterprise AI Is RAG + Fine Tuning - Here’s Why[www.montecarlodata.com]</a></li>
+</ul>
+</li>
+<li>Tools
+<ul>
+<li>Langchain</li>
+<li>LlamaIndex</li>
+<li>HuggingFace</li>
+<li>Ray Serve</li>
+</ul>
+</li>
+<li>open source language models
+<ul>
+<li>LLAMA 2
+<ul>
+<li><a title="https://ai.meta.com/llama/" href="https://ai.meta.com/llama/">https://ai.meta.com/llama/</a></li>
+</ul>
+</li>
+<li>GPT4ALL - runs on mac</li>
+</ul>
+</li>
+</ul>
+<p><strong>Resources</strong></p>
+<ul>
+<li><strong>Courses</strong>
+<ul>
+<li><a title="https://aws.amazon.com/blogs/aws/generative-ai-with-large-language-models-new-hands-on-course-by-deeplearning-ai-and-aws/" href="https://aws.amazon.com/blogs/aws/generative-ai-with-large-language-models-new-hands-on-course-by-deeplearning-ai-and-aws/">Generative AI with Large Language Models — New Hands-on Course by DeepLearning.AI and AWS | AWS News Blog[aws.amazon.com]</a>
+<ul>
+<li><a title="https://www.deeplearning.ai/courses/generative-ai-with-llms/" href="https://www.deeplearning.ai/courses/generative-ai-with-llms/">Generative AI with LLMs - DeepLearning.AI[www.deeplearning.ai]</a>
+<ul>
+<li><a title="https://www.coursera.org/learn/generative-ai-with-llms?utm_campaign=WebsiteCoursesGAIA&amp;utm_medium=institutions&amp;utm_source=deeplearning-ai" href="https://www.coursera.org/learn/generative-ai-with-llms?utm_campaign=WebsiteCoursesGAIA&amp;utm_medium=institutions&amp;utm_source=deeplearning-ai">Generative AI with Large Language Models | Coursera[www.coursera.org]</a></li>
+</ul>
+</li>
+<li>By that <a title="https://www.deeplearning.ai/" href="https://www.deeplearning.ai/">DeepLearning.AI</a> (Andrew Ng) and AWS - 16 hours ( 3 weeks - 5hrs/week) - Intermediate Level
+<ul>
+<li>including scoping the problem, choosing an LLM, adapting the LLM to your domain, optimizing the model for deployment, and integrating into business applications. The course not only focuses on the practical aspects of generative AI but also highlights the science behind LLMs</li>
+<li>Describe in detail the transformer architecture that powers LLMs, how they’re trained, and how fine-tuning enables LLMs to be adapted to a variety of specific use cases</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a title="https://www.coursera.org/learn/introduction-to-large-language-models" href="https://www.coursera.org/learn/introduction-to-large-language-models">Introduction to Large Language Models | Coursera[www.coursera.org]</a>  - Beginner Level - 1 hour (Instructor: Google Cloud Training)</li>
+<li><a title="https://www.cloudskillsboost.google/course_templates/539" href="https://www.cloudskillsboost.google/course_templates/539">Introduction to Large Language Models | Google Cloud Skills Boost[www.cloudskillsboost.google]</a></li>
+<li>Princeton
+<ul>
+<li><a title="https://mediacentral.princeton.edu/media/How+Does+ChatGPT+WorkF+An+Overview+of+Large+Language+Models+%28Part+1+of+3%29/1_d3gex17b" href="https://mediacentral.princeton.edu/media/How+Does+ChatGPT+WorkF+An+Overview+of+Large+Language+Models+%28Part+1+of+3%29/1_d3gex17b">How Does ChatGPT Work? An Overview of Large Language Models (Part 1 of 3) - Princeton University Media Central[mediacentral.princeton.edu]</a></li>
+<li><a title="https://mediacentral.princeton.edu/media/How+Does+ChatGPT+WorkF+An+Overview+of+Large+Language+Models+%28Part+2+of+3%29/1_qjpkfuvl" href="https://mediacentral.princeton.edu/media/How+Does+ChatGPT+WorkF+An+Overview+of+Large+Language+Models+%28Part+2+of+3%29/1_qjpkfuvl">How Does ChatGPT Work? An Overview of Large Language Models (Part 2 of 3) - Princeton University Media Central[mediacentral.princeton.edu]</a></li>
+<li><a title="https://mediacentral.princeton.edu/media/How+Does+ChatGPT+WorkF+An+Overview+of+Large+Language+Models+%28Part+3+of+3%29/1_tvoyjisq" href="https://mediacentral.princeton.edu/media/How+Does+ChatGPT+WorkF+An+Overview+of+Large+Language+Models+%28Part+3+of+3%29/1_tvoyjisq">How Does ChatGPT Work? An Overview of Large Language Models (Part 3 of 3) - Princeton University Media Central[mediacentral.princeton.edu]</a></li>
+</ul>
+</li>
+<li><a title="https://docs.cohere.com/docs/llmu" href="https://docs.cohere.com/docs/llmu">Welcome to LLM University![docs.cohere.com]</a></li>
+<li><a title="https://huggingface.co/learn/nlp-course/chapter1/1?utm_source=www.turingpost.com&amp;utm_medium=referral&amp;utm_campaign=8-free-courses-to-master-large-language-models" href="https://huggingface.co/learn/nlp-course/chapter1/1?utm_source=www.turingpost.com&amp;utm_medium=referral&amp;utm_campaign=8-free-courses-to-master-large-language-models">Introduction - Hugging Face NLP Course[huggingface.co]</a></li>
+<li><a title="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/" href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/">ChatGPT Prompt Engineering for Developers - DeepLearning.AI[www.deeplearning.ai]</a></li>
+<li>Misc
+<ul>
+<li><a title="https://www.turingpost.com/p/llms-courses" href="https://www.turingpost.com/p/llms-courses">8 Free Courses to Master Large Language Models[www.turingpost.com]</a></li>
+<li><a title="https://deepgram.com/learn/foundational-courses-to-learn-large-language-models" href="https://deepgram.com/learn/foundational-courses-to-learn-large-language-models">The 6 Foundational Courses To Learn Large Language Models | Deepgram[deepgram.com]</a></li>
+<li><a title="https://www.cs.princeton.edu/courses/archive/fall22/cos597G/" href="https://www.cs.princeton.edu/courses/archive/fall22/cos597G/">COS 597G: Understanding Large Language Models[www.cs.princeton.edu]</a>  (no online videos/enrollment??)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a title="https://cloudonair.withgoogle.com/events/innovation-in-ai-ml-infrastructure-gke-g2-inference" href="https://cloudonair.withgoogle.com/events/innovation-in-ai-ml-infrastructure-gke-g2-inference">Home - Google Cloud AI Infrastructure - Open LLMs on GKE - Llama 2 and Beyond[cloudonair.withgoogle.com]</a></li>
+<li><a title="https://github.com/GoogleCloudPlatform/ai-on-gke" href="https://github.com/GoogleCloudPlatform/ai-on-gke">GitHub - GoogleCloudPlatform/ai-on-gke[github.com]</a>
+<ul>
+<li><a title="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/tutorials/serving-llama2-70b-on-l4-gpus" href="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/tutorials/serving-llama2-70b-on-l4-gpus">ai-on-gke/tutorials/serving-llama2-70b-on-l4-gpus at main · GoogleCloudPlatform/ai-on-gke · GitHub[github.com]</a></li>
+</ul>
+</li>
+<li><a title="https://cloud.google.com/kubernetes-engine/docs/integrations/ai-infra" href="https://cloud.google.com/kubernetes-engine/docs/integrations/ai-infra">AI/ML orchestration on GKE documentation  |  Google Kubernetes Engine (GKE)  |  Google Cloud[cloud.google.com]</a></li>
+<li><a title="https://ai.meta.com/llama/" href="https://ai.meta.com/llama/">Llama 2 - Meta AI[ai.meta.com]</a></li>
+<li><a title="https://www.ibm.com/blog/open-source-large-language-models-benefits-risks-and-types/" href="https://www.ibm.com/blog/open-source-large-language-models-benefits-risks-and-types/">Open source large language models: Benefits, risks and types - IBM Blog[www.ibm.com]</a></li>
+<li><a title="https://betterprogramming.pub/navigating-the-ai-hype-and-thinking-about-niche-llm-applications-22ea7929b33d" href="https://betterprogramming.pub/navigating-the-ai-hype-and-thinking-about-niche-llm-applications-22ea7929b33d">Navigating the AI Hype and Thinking about Niche LLM Applications | by Hadi Javeed | Better Programming[betterprogramming.pub]</a></li>
+<li>Neural Networks to LLM
+<ul>
+<li><a title="https://aws.amazon.com/compare/the-difference-between-deep-learning-and-neural-networks/" href="https://aws.amazon.com/compare/the-difference-between-deep-learning-and-neural-networks/">Neural Networks vs Deep Learning - Difference Between Artificial Intelligence Fields - AWS[aws.amazon.com]</a></li>
+<li><a title="https://www.baeldung.com/cs/rnns-transformers-nlp" href="https://www.baeldung.com/cs/rnns-transformers-nlp">From RNNs to Transformers | Baeldung on Computer Science[www.baeldung.com]</a></li>
+<li><a title="https://www.baeldung.com/cs/nlp-encoder-decoder-models" href="https://www.baeldung.com/cs/nlp-encoder-decoder-models">Encoder-Decoder Models for Natural Language Processing | Baeldung on Computer Science[www.baeldung.com]</a></li>
+</ul>
+</li>
+<li>General
+<ul>
+<li><a title="https://developers.google.com/machine-learning/resources" href="https://developers.google.com/machine-learning/resources">Machine Learning | Resources  |  Google for Developers[developers.google.com]</a>
+<ul>
+<li><a title="https://developers.google.com/machine-learning/resources/intro-llms" href="https://developers.google.com/machine-learning/resources/intro-llms">Introduction to Large Language Models  |  Machine Learning  |  Google for Developers[developers.google.com]</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Notes from <a title="https://cloudonair.withgoogle.com/events/innovation-in-ai-ml-infrastructure-gke-g2-inference" href="https://cloudonair.withgoogle.com/events/innovation-in-ai-ml-infrastructure-gke-g2-inference">Home - Google Cloud AI Infrastructure - Open LLMs on GKE - Llama 2 and Beyond[cloudonair.withgoogle.com]</a></p>
+<p>Google PALM or other open source<br />
+Llama 2<br />
+13 billion or 7 depends on your performance</p>
+<p>K8 for AI</p>
+<p>Building an open llm inference stack<br />
+day 2 operatizational</p>
+<p>multi gpu sharding<br />
+huggingface</p>
+<p>check resources used in GKE</p>
+<p>RAG - retrieval augmented generation<br />
+langchain dependencies<br />
+vector database - pg postgres database<br />
+barracuda~~ accelerator</p>
+<p>kuberay</p>
+<p>@Robert Accelerators are special compute units that are purpose built to do one thing really well. For example TPU is really good at doing matrix multiplication which is needed for ML workloads.</p>
+<p>Is the model inferencing in ONNX format?<br />
+prompts<br />
+failrly large model spread across 2 gpus<br />
+llama2<br />
+mistral 7b</p>
+<p>AI/ML orchestration on GKE documentation<br />
+g.co/cloud/gke-aiml</p>
+<p>GoogleCloudPlatform/ai-on-gke<br />
+github.com/GoogleCloudPlatform/ai-on-gke</p>
+]]></content:encoded>
+        </item>
+    </channel>
+</rss>
