@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Terraform Provider Mirror Setup on GCS - Blog</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Blog</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Terraform Provider Mirror Setup on GCS</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1705973536959"
+                  >2024-01-22 19:32</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1705973629317"
+                  >2024-01-22 19:33</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">blog</span>
+              
+              <span class="keyword">gcp</span>
+              
+              <span class="keyword">cloud</span>
+              
+              <span class="keyword">terraform</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>Original Date: 02/03/2022</p>
+<hr />
+<p>layout: page<br />
+title: Terraform Provider Mirror Setup on GCS<br />
+categories:</p>
+<ul>
+<li>tech</li>
+<li>cloud<br />
+tags:</li>
+<li>terraform</li>
+<li>tech</li>
+<li>cloud<br />
+comments: true<br />
+published: true</li>
+</ul>
+<hr />
+<p>This article covers the basic steps for creating a terraform provider mirror in a Google GCS bucket. For those of you who are not familiar with terraform providers can read more about it <a title="https://www.terraform.io/registry/providers" href="https://www.terraform.io/registry/providers">here</a> at <a title="https://www.terraform.io/" href="https://www.terraform.io/">www.terraform.io</a>.</p>
+<ol>
+<li>Setup an example tf file with just the providers. See <a title="https://www.terraform.io/language/providers/configuration" href="https://www.terraform.io/language/providers/configuration">Provider Configuration</a><div><pre class="hljs"><code>| cat main.tf 
+provider <span class="hljs-string">"google"</span> {
+  <span class="hljs-attr">project</span> = <span class="hljs-string">"acme-app"</span>
+  <span class="hljs-attr">region</span>  = <span class="hljs-string">"us-central1"</span>
+}</code></pre></div>
+</li>
+<li>Test providers download
+<ul>
+<li>Try below to download provider from internet<div><pre class="hljs"><code>terraform <span class="hljs-keyword">init</span></code></pre></div>
+</li>
+<li>Verify<div><pre class="hljs"><code>| terraform providers
+
+Providers required by configuration:
+.
+└── provider[registry.terraform.io<span class="hljs-regexp">/hashicorp/g</span>oogle]   </code></pre></div>
+</li>
+</ul>
+</li>
+<li>Now create a local mirror. The command below will copy all providers for the above module to this local directory mirror. See <a title="https://www.terraform.io/cli/commands/providers/mirror" href="https://www.terraform.io/cli/commands/providers/mirror">command reference</a><div><pre class="hljs"><code> | mkdir mirror
+ | terraform providers mirror mirror/
+ - Mirroring hashicorp/google...
+   - Selected v4.<span class="hljs-number">9.0</span> <span class="hljs-keyword">with</span> no constraints
+   - Downloading <span class="hljs-keyword">package</span> <span class="hljs-title">for darwin_amd64...</span>
+   - <span class="hljs-keyword">Package</span> <span class="hljs-title">authenticated: signed by HashiCorp   </span></code></pre></div>
+</li>
+<li>Try the local mirror
+<ul>
+<li>setup<div><pre class="hljs"><code><span class="hljs-comment"># remove the lock file</span>
+rm .terraform.lock.hcl 
+
+<span class="hljs-comment"># setup enhanced logging</span>
+<span class="hljs-built_in">export</span> <span class="hljs-attribute">TF_LOG</span>=TRACE</code></pre></div>
+</li>
+<li>setup local configuration to use the above local mirror<div><pre class="hljs"><code><span class="hljs-built_in">export</span> <span class="hljs-attribute">TF_CLI_CONFIG_FILE</span>=<span class="hljs-string">"<span class="hljs-variable">$(pwd)</span>/.terraformrctemp"</span>
+cat &lt;&lt;EOF &gt; <span class="hljs-variable">$TF_CLI_CONFIG_FILE</span>
+provider_installation {
+  filesystem_mirror {
+    path    = <span class="hljs-string">"/Users/admin/Documents/docs/docs_misc/technical/code/github/terraform-tutorial/mirror/"</span>
+    include = [<span class="hljs-string">"hashicorp/google"</span>]
+  }
+}
+EOF     </code></pre></div>
+</li>
+<li>try the local mirror now<div><pre class="hljs"><code>terraform <span class="hljs-keyword">init</span></code></pre></div>
+</li>
+</ul>
+</li>
+<li>Setup remote mirror in GCS
+<ul>
+<li>create a <strong>public</strong> bucket</li>
+<li>copy the local mirror to the GCP bucket (assumes gcloud cli has been setup correctly with region/project/etc)<div><pre class="hljs"><code>gsutil cp -r ..<span class="hljs-regexp">/terraform-tutorial/mi</span>rror<span class="hljs-regexp">/ gs:/</span><span class="hljs-regexp">/terraform-registry</span></code></pre></div>
+note: this will copy the mirror dir to the bucket (and it will be on the path)</li>
+<li>Test that access works<div><pre class="hljs"><code>| curl https:<span class="hljs-regexp">//</span>storage.googleapis.com<span class="hljs-regexp">/terraform-registry/mi</span>rror<span class="hljs-regexp">/registry.terraform.io/</span>hashicorp<span class="hljs-regexp">/google/i</span>ndex.json
+{
+  <span class="hljs-string">"versions"</span>: {
+    <span class="hljs-string">"4.9.0"</span>: {}
+  }
+}</code></pre></div>
+</li>
+</ul>
+</li>
+<li>Try the remote mirror
+<ul>
+<li>
+<p>Update the CFG file to use the remote bucket mirror</p>
+<div><pre class="hljs"><code>  | cat .terraformrctemp 
+  <span class="hljs-title class_">provider_installation</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-title class_">network_mirror</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">url</span>    <span class="hljs-operator">=</span> <span class="hljs-string">"https://storage.googleapis.com/terraform-registry/mirror/"</span>
+      <span class="hljs-attr">include</span> <span class="hljs-operator">=</span> [<span class="hljs-string">"hashicorp/google"</span>]
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span></code></pre></div>
+</li>
+<li>
+<p>test</p>
+<div><pre class="hljs"><code>| terraform init
+Initializing provider plugins...
+...
+Reusing previous version of hashicorp/google from the dependency lock file
+<span class="hljs-number">2022</span>-<span class="hljs-number">02</span>-<span class="hljs-number">01</span>T21:<span class="hljs-number">24</span>:<span class="hljs-number">34.872</span>-<span class="hljs-number">0600</span> [DEBUG] Querying available versions of provider registry.terraform.io<span class="hljs-regexp">/hashicorp/g</span>oogle at network mirror https:<span class="hljs-regexp">//</span>storage.googleapis.com<span class="hljs-regexp">/terraform-registry/mi</span>rror/
+<span class="hljs-number">2022</span>-<span class="hljs-number">02</span>-<span class="hljs-number">01</span>T21:<span class="hljs-number">24</span>:<span class="hljs-number">34.873</span>-<span class="hljs-number">0600</span> [DEBUG] GET https:<span class="hljs-regexp">//</span>storage.googleapis.com<span class="hljs-regexp">/terraform-registry/mi</span>rror<span class="hljs-regexp">/registry.terraform.io/</span>hashicorp<span class="hljs-regexp">/google/i</span>ndex.json
+<span class="hljs-number">2022</span>-<span class="hljs-number">02</span>-<span class="hljs-number">01</span>T21:<span class="hljs-number">24</span>:<span class="hljs-number">34.876</span>-<span class="hljs-number">0600</span> [TRACE] HTTP client GET request to https:<span class="hljs-regexp">//</span>storage.googleapis.com<span class="hljs-regexp">/terraform-registry/mi</span>rror<span class="hljs-regexp">/registry.terraform.io/</span>hashicorp<span class="hljs-regexp">/google/i</span>ndex.json
+...
+Terraform has been successfully initialized!
+</code></pre></div>
+<p>Note that it downloaded from our GCS mirror</p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

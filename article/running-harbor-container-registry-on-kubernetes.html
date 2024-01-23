@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Running Harbor container registry on Kubernetes - Blog</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Blog</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Running Harbor container registry on Kubernetes</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1705973325051"
+                  >2024-01-22 19:28</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1705973453410"
+                  >2024-01-22 19:30</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">dct</span>
+              
+              <span class="keyword">notary</span>
+              
+              <span class="keyword">blog</span>
+              
+              <span class="keyword">helm</span>
+              
+              <span class="keyword">docker</span>
+              
+              <span class="keyword">minikube</span>
+              
+              <span class="keyword">harbor</span>
+              
+              <span class="keyword">kubernetes</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>Original Date: 08/14/2020</p>
+<hr />
+<p>layout: page<br />
+title: Running Harbor container registry on Kubernetes<br />
+categories: [tech]<br />
+tags: [tech, kubernetes, minikube, harbor, helm, docker, DCT, notary]</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p><a title="https://goharbor.io/" href="https://goharbor.io/">Harbor</a> is relatively new and popular container registry. If you are running your own kubernetes/container environment, then using this as a private registry may be a good choice. This covers the basic deployment process using minikube.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>kubernetes setup including, minikube and kubectl</li>
+<li>helm 3</li>
+<li>virtualbox</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ul>
+<li>start minikube using virtualbox driver, and enable ingress<div><pre class="hljs"><code>minikube <span class="hljs-keyword">start</span> <span class="hljs-comment">--vm-driver virtualbox</span>
+minikube addons <span class="hljs-keyword">enable</span> ingress
+# <span class="hljs-keyword">to</span> see the list <span class="hljs-keyword">of</span> <span class="hljs-keyword">add</span> ons
+minikube addons list</code></pre></div>
+<ul>
+<li>Because we will be setting up harbor services using ingress, we need the virtualbox driver</li>
+<li>If we were using NodePort, we could have used docker driver</li>
+</ul>
+</li>
+<li>Clone <a title="https://github.com/goharbor/harbor-helm" href="https://github.com/goharbor/harbor-helm">harbor repo</a>, and cd to the repo
+<ul>
+<li>we are deploying staright from repo</li>
+</ul>
+</li>
+<li>Setup harbor namespace</li>
+</ul>
+<div><pre class="hljs"><code><span class="hljs-string">kubectl</span> <span class="hljs-string">create</span> <span class="hljs-string">namespace</span> <span class="hljs-string">harbor</span>
+<span class="hljs-string">kubectl</span> <span class="hljs-string">config</span> <span class="hljs-built_in">set-context</span> <span class="hljs-built_in">--current</span> <span class="hljs-built_in">--namespace</span> <span class="hljs-string">harbor</span>
+<span class="hljs-string">helm</span> <span class="hljs-string">install</span> <span class="hljs-string">harbor</span> .</code></pre></div>
+<ul>
+<li>
+<p>Setup hosts file (simulate dns for ingress)</p>
+<ul>
+<li>find out the ip address for ingress</li>
+</ul>
+<div><pre class="hljs"><code>| =&gt; minikube ip
+<span class="hljs-number">192.168</span><span class="hljs-number">.99</span><span class="hljs-number">.103</span>
+
+| =&gt; kg ingress
+eNAME                           <span class="hljs-keyword">CLASS</span>    HOSTS                  ADDRESS   PORTS     AGE
+harbor-harbor-ingress          &lt;<span class="hljs-keyword">none</span>&gt;   core.harbor.<span class="hljs-keyword">domain</span>               <span class="hljs-number">80</span>, <span class="hljs-number">443</span>   <span class="hljs-number">6</span>m17s
+harbor-harbor-ingress-notary   &lt;<span class="hljs-keyword">none</span>&gt;   notary.harbor.<span class="hljs-keyword">domain</span>             <span class="hljs-number">80</span>, <span class="hljs-number">443</span>   <span class="hljs-number">6</span>m17s
+
+| =&gt; kubectl describe ingress 
+<span class="hljs-type">Name</span>:             harbor-harbor-ingress
+Namespace:        harbor
+Address:          <span class="hljs-number">192.168</span><span class="hljs-number">.99</span><span class="hljs-number">.103</span>
+</code></pre></div>
+<ul>
+<li>Setup hosts file: on mac, add to /etc/hosts, the following</li>
+</ul>
+<div><pre class="hljs"><code><span class="hljs-number">192.168.99.103</span> core.harbor.domain
+<span class="hljs-number">192.168.99.103</span> notary.harbor.domain</code></pre></div>
+<ul>
+<li>At this point you should be able to access harbor on: <a title="https://core.harbor.domain/" href="https://core.harbor.domain/">https://core.harbor.domain</a> using the deafult username and password
+<ul>
+<li>username: admin</li>
+<li>password: Harbor12345</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="configuring-docker-client">Configuring Docker Client</h2>
+<p>Even though harbor UI is up, docker client will not be able to access it since we haven't installed harbor certificates yet.</p>
+<ul>
+<li>Configure docker daemon to use: we can use mac's docker daemon or the one in minikube. Here we will use the one in minikube (it's closer to how linux is setup)</li>
+</ul>
+<div><pre class="hljs"><code>eval <span class="hljs-constructor">$(<span class="hljs-params">minikube</span> <span class="hljs-params">docker</span>-<span class="hljs-params">env</span>)</span></code></pre></div>
+<ul>
+<li>Get the certificates from kubernetes secrets</li>
+</ul>
+<div><pre class="hljs"><code><span class="hljs-comment"># the base64 command on linux would use -d </span>
+kubectl -n harbor <span class="hljs-built_in">get</span> secrets harbor-harbor-ingress -o <span class="hljs-attribute">jsonpath</span>=<span class="hljs-string">"{.data['ca\.crt']}"</span> | base64 -D &gt; harbor-ca.crt</code></pre></div>
+<ul>
+<li>
+<p>Install certificates in docker daemon:</p>
+<div><pre class="hljs"><code><span class="hljs-comment"># copy the certificate</span>
+scp -o IdentitiesOnly=yes -i $(minikube ssh-key) harbor-ca.crt docker@$(minikube ip):./harbor-ca.crt
+
+<span class="hljs-comment"># install the certificate by logging in)</span>
+minikube ssh
+sudo mkdir -p <span class="hljs-regexp">/etc/</span>docker<span class="hljs-regexp">/certs.d/</span>core.harbor.domain
+sudo cp harbor-ca.crt <span class="hljs-regexp">/etc/</span>docker<span class="hljs-regexp">/certs.d/</span>core.harbor.domain
+
+<span class="hljs-comment"># exit back to mac</span>
+<span class="hljs-keyword">exit</span>
+</code></pre></div>
+</li>
+<li>
+<p>configure notary certificates (optional - required only if notary or DCT is needed)<br />
+Same ingress is used by the notary/Docker Content Trust as well, and the certificate needs to be configured for it's use as well (more on this below).<br />
+We will be configuring this on the docker client side (ie mac)</p>
+<div><pre class="hljs"><code>| =&gt; cp harbor-ca.crt <span class="hljs-regexp">/Users/</span>admin<span class="hljs-regexp">/.docker/</span>tls/notary.harbor.domain</code></pre></div>
+</li>
+<li>
+<p>Now test the client by logging in, and pushing an image</p>
+<div><pre class="hljs"><code>| =&gt; docker <span class="hljs-keyword">login</span> core.harbor.<span class="hljs-keyword">domain</span> <span class="hljs-comment">--username=admin --password Harbor12345</span>
+<span class="hljs-built_in">WARNING</span>! <span class="hljs-keyword">Using</span> <span class="hljs-comment">--password via the CLI is insecure. Use --password-stdin.</span>
+<span class="hljs-keyword">Login</span> Succeeded
+
+docker pull hello-world
+
+| =&gt; docker tag hello-world core.harbor.<span class="hljs-keyword">domain</span>/library/hello-world:<span class="hljs-number">1</span>
+| =&gt; docker push core.harbor.<span class="hljs-keyword">domain</span>/library/hello-world:<span class="hljs-number">1</span>
+The push refers <span class="hljs-keyword">to</span> repository [core.harbor.<span class="hljs-keyword">domain</span>/library/hello-world]
+<span class="hljs-number">9</span>c27e219663c: Layer already <span class="hljs-keyword">exists</span> 
+<span class="hljs-number">1</span>: digest: sha256:<span class="hljs-number">90659</span>bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042 size: <span class="hljs-number">525</span>
+</code></pre></div>
+</li>
+</ul>
+<h2 id="using-docker-content-trust">Using Docker Content Trust</h2>
+<ul>
+<li>
+<p>The certificates required for notary have already been setup (see above)</p>
+</li>
+<li>
+<p>We can enable DCT by configuring certain environment variables</p>
+<div><pre class="hljs"><code><span class="hljs-built_in">export</span> <span class="hljs-attribute">DOCKER_CONTENT_TRUST</span>=1
+<span class="hljs-built_in">export</span> <span class="hljs-attribute">DOCKER_CONTENT_TRUST_SERVER</span>=https://notary.harbor.domain</code></pre></div>
+</li>
+<li>
+<p>Now we can sign and push an image. While there are other advanced ways of doing this, we will be using a simple push</p>
+<div><pre class="hljs"><code># Running in debug mode to see more details
+# also in our <span class="hljs-keyword">case</span> we already have root keys created and loaded
+| =&gt; docker -l=debug <span class="hljs-keyword">push</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world:<span class="hljs-number">1</span>
+The <span class="hljs-keyword">push</span> refers to repository [core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world]
+<span class="hljs-number">9</span>c27e219663c: Layer already exists 
+<span class="hljs-number">1</span>: digest: sha256:<span class="hljs-number">90659</span>bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042 <span class="hljs-keyword">size</span>: <span class="hljs-number">525</span>
+Signing and pushing trust metadata
+DEBU[<span class="hljs-number">0001</span>] reading certificate directory: <span class="hljs-regexp">/Users/</span>admin<span class="hljs-regexp">/.docker/</span>tls/notary.harbor.domain 
+DEBU[<span class="hljs-number">0001</span>] crt: <span class="hljs-regexp">/Users/</span>admin<span class="hljs-regexp">/.docker/</span>tls<span class="hljs-regexp">/notary.harbor.domain/</span>core_harbor_domain_ca_root.crt 
+DEBU[<span class="hljs-number">0001</span>] crt: <span class="hljs-regexp">/Users/</span>admin<span class="hljs-regexp">/.docker/</span>tls<span class="hljs-regexp">/notary.harbor.domain/</span>harbor-ca.crt 
+DEBU[<span class="hljs-number">0001</span>] crt: <span class="hljs-regexp">/Users/</span>admin<span class="hljs-regexp">/.docker/</span>tls<span class="hljs-regexp">/notary.harbor.domain/i</span>ngress.tls.crt 
+DEBU[<span class="hljs-number">0002</span>] No yubikey found, using alternative key storage: no library found 
+DEBU[<span class="hljs-number">0002</span>] Making dir path: <span class="hljs-regexp">/Users/</span>admin<span class="hljs-regexp">/.docker/</span>trust<span class="hljs-regexp">/tuf/</span>core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world/changelist 
+DEBU[<span class="hljs-number">0002</span>] received HTTP status <span class="hljs-number">404</span> when requesting root. 
+DEBU[<span class="hljs-number">0002</span>] No yubikey found, using alternative key storage: no library found 
+DEBU[<span class="hljs-number">0002</span>] No yubikey found, using alternative key storage: no library found 
+Enter passphrase <span class="hljs-keyword">for</span> root key with ID c7c1603: 
+DEBU[<span class="hljs-number">0009</span>] generated ECDSA key with keyID: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+DEBU[<span class="hljs-number">0009</span>] generated <span class="hljs-keyword">new</span> ecdsa key <span class="hljs-keyword">for</span> role: targets and keyID: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+Enter passphrase <span class="hljs-keyword">for</span> <span class="hljs-keyword">new</span> repository key with ID d95c306:
+Repeat passphrase <span class="hljs-keyword">for</span> <span class="hljs-keyword">new</span> repository key with ID d95c306:
+DEBU[<span class="hljs-number">0018</span>] got remote timestamp ecdsa key with keyID: abd474e548219093df0ceb233ba4196a7e8d810d1643b515a68e08828c85f732 
+DEBU[<span class="hljs-number">0018</span>] got remote snapshot ecdsa key with keyID: ecdd284ddd45ad506594ee4069abfc18bbb01b85aa2c06384e52a115b5514343 
+DEBU[<span class="hljs-number">0018</span>] generating <span class="hljs-keyword">new</span> snapshot...                   
+DEBU[<span class="hljs-number">0018</span>] Saving changes to Trusted Collection.        
+DEBU[<span class="hljs-number">0018</span>] signing root...                              
+DEBU[<span class="hljs-number">0018</span>] sign called with <span class="hljs-number">1</span>/<span class="hljs-number">1</span> required keys           
+DEBU[<span class="hljs-number">0018</span>] No yubikey found, using alternative key storage: no library found 
+DEBU[<span class="hljs-number">0018</span>] sign called with <span class="hljs-number">0</span>/<span class="hljs-number">0</span> required keys           
+DEBU[<span class="hljs-number">0018</span>] sign targets called <span class="hljs-keyword">for</span> role targets         
+DEBU[<span class="hljs-number">0018</span>] sign called with <span class="hljs-number">1</span>/<span class="hljs-number">1</span> required keys           
+DEBU[<span class="hljs-number">0018</span>] No yubikey found, using alternative key storage: no library found 
+DEBU[<span class="hljs-number">0018</span>] sign called with <span class="hljs-number">0</span>/<span class="hljs-number">0</span> required keys           
+Finished initializing <span class="hljs-string">"core.harbor.domain/library/hello-world"</span>
+DEBU[<span class="hljs-number">0018</span>] Adding target <span class="hljs-string">"1"</span> with sha256 <span class="hljs-string">"90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042"</span> and <span class="hljs-keyword">size</span> <span class="hljs-number">525</span> bytes. 
+DEBU[<span class="hljs-number">0018</span>] entered ValidateRoot with dns: core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] found the following root keys: [c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286] 
+DEBU[<span class="hljs-number">0018</span>] found <span class="hljs-number">1</span> valid leaf certificates <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] found <span class="hljs-number">1</span> leaf certs, of which <span class="hljs-number">1</span> are valid leaf certs <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] checking root against trust_pinning config <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] checking trust-pinning <span class="hljs-keyword">for</span> cert: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>]  role has key IDs: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] verifying signature <span class="hljs-keyword">for</span> key ID: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] root validation succeeded <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] entered ValidateRoot with dns: core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] found the following root keys: [c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286] 
+DEBU[<span class="hljs-number">0018</span>] found <span class="hljs-number">1</span> valid leaf certificates <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] found <span class="hljs-number">1</span> leaf certs, of which <span class="hljs-number">1</span> are valid leaf certs <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] checking root against trust_pinning config <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] checking trust-pinning <span class="hljs-keyword">for</span> cert: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>]  role has key IDs: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] verifying signature <span class="hljs-keyword">for</span> key ID: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] root validation succeeded <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] received HTTP status <span class="hljs-number">404</span> when requesting root. 
+DEBU[<span class="hljs-number">0018</span>] Loading trusted collection.                  
+DEBU[<span class="hljs-number">0018</span>] entered ValidateRoot with dns: core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] found the following root keys: [c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286] 
+DEBU[<span class="hljs-number">0018</span>] found <span class="hljs-number">1</span> valid leaf certificates <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] found <span class="hljs-number">1</span> leaf certs, of which <span class="hljs-number">1</span> are valid leaf certs <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] checking root against trust_pinning config <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] checking trust-pinning <span class="hljs-keyword">for</span> cert: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>]  role has key IDs: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] verifying signature <span class="hljs-keyword">for</span> key ID: c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286 
+DEBU[<span class="hljs-number">0018</span>] root validation succeeded <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world 
+DEBU[<span class="hljs-number">0018</span>] targets role has key IDs: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+DEBU[<span class="hljs-number">0018</span>] verifying signature <span class="hljs-keyword">for</span> key ID: d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7 
+DEBU[<span class="hljs-number">0018</span>] changelist add: <span class="hljs-number">1</span>                            
+DEBU[<span class="hljs-number">0018</span>] No yubikey found, using alternative key storage: no library found 
+DEBU[<span class="hljs-number">0018</span>] applied <span class="hljs-number">1</span> change(s)                          
+DEBU[<span class="hljs-number">0018</span>] sign targets called <span class="hljs-keyword">for</span> role targets         
+DEBU[<span class="hljs-number">0018</span>] sign called with <span class="hljs-number">1</span>/<span class="hljs-number">1</span> required keys           
+DEBU[<span class="hljs-number">0018</span>] No yubikey found, using alternative key storage: no library found 
+DEBU[<span class="hljs-number">0018</span>] sign called with <span class="hljs-number">0</span>/<span class="hljs-number">0</span> required keys           
+DEBU[<span class="hljs-number">0018</span>] generating <span class="hljs-keyword">new</span> snapshot...                   
+DEBU[<span class="hljs-number">0018</span>] signing snapshot...                          
+DEBU[<span class="hljs-number">0018</span>] sign called with <span class="hljs-number">1</span>/<span class="hljs-number">1</span> required keys           
+DEBU[<span class="hljs-number">0018</span>] No yubikey found, using alternative key storage: no library found 
+DEBU[<span class="hljs-number">0018</span>] Client does not have the key to sign snapshot. Assuming that server should sign the snapshot. 
+Successfully signed core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world:<span class="hljs-number">1</span>
+</code></pre></div>
+</li>
+<li>
+<p>We can now verify that the image has been signed (notice that the repository key is the same that was created above while pushing)</p>
+<div><pre class="hljs"><code>| =&gt; docker trust <span class="hljs-keyword">inspect</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world --pretty
+
+Signatures <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world
+
+SIGNED TAG          DIGEST                                                             SIGNERS
+<span class="hljs-number">1</span>                   <span class="hljs-number">90659</span>bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042   (Repo Admin)
+
+Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<span class="hljs-regexp">/library/</span>hello-world
+
+  Repository Key:	d95c306804340d51995c30a1dbaa81ba8ea9f2af871eef171bdcc934e3784bc7
+  Root Key:	c1b0a7a23fcc03ab9b66a8a6b804a766614461971cbc76209654c165695e1286</code></pre></div>
+</li>
+<li>
+<p>References</p>
+<ul>
+<li><a title="https://docs.docker.com/engine/security/trust/" href="https://docs.docker.com/engine/security/trust/">Using Trusted Image</a><br />
+<a title="https://docs.docker.com/engine/security/trust/content_trust/" href="https://docs.docker.com/engine/security/trust/content_trust/">Content trust in Docker | Docker Documentation (docs.docker.com)</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="notary-client">Notary Client</h2>
+<ul>
+<li>We can also perform advanced notary operation using the <a title="https://github.com/theupdateframework/notary" href="https://github.com/theupdateframework/notary">notary</a> client.</li>
+</ul>
+<h3 id="configuring-the-notary-client">Configuring the notary client</h3>
+<pre><code>* Download the notary client from [the official releases page](https://github.com/theupdateframework/notary/releases). These are pre-compiled images so just download, make executable and add to the path
+* Setup the configuration file (all arguments can also be supplied on the command line but this makes it easier). The harbor certificate file is the same we created above:
+```
+# ignore trust pinning settings for now
+# 
+| =&gt; mkdir ~/.notary directory
+| =&gt; cat ~/.notary/config.json 
+{
+  "trust_dir" : "~/.docker/trust",
+  "remote_server": {
+  "url": "https://notary.harbor.domain",
+  "root_ca": "/Users/admin/github/harbor-helm/harbor-ca.crt"
+},
+"trust_pinning": {
+  "certs": {
+    "docker.com/notary": ["49cf5c6404a35fa41d5a5aa2ce539dfee0d7a2176d0da488914a38603b1f4292"]
+  }
+}
+</code></pre>
+<p>}</p>
+<div><pre class="hljs"><code>
+### <span class="hljs-keyword">Using</span> the notary client
+* This only provides some basic sample commands, <span class="hljs-keyword">for</span> details <span class="hljs-keyword">on</span> how <span class="hljs-keyword">to</span> use, please see the notary documentation
+* We can verify the signatures <span class="hljs-keyword">using</span> the notary client
+  ```
+  | =&gt; notary list core.harbor.domain/library/hello-world
+  NAME    DIGEST                                                              SIZE (BYTES)           ROLE
+   ----    ------                                                              ------------    ----
+  <span class="hljs-number">1</span>       <span class="hljs-number">90659</span>bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042    <span class="hljs-number">525</span>             targets
+  ```
+* <span class="hljs-keyword">To</span> initialize a <span class="hljs-built_in">new</span> repo
+  ```
+  | =&gt; notary init core.harbor.domain/library/ex1
+  Root <span class="hljs-keyword">key</span> found, <span class="hljs-keyword">using</span>: c7c1603c6f89a72bc80165c11617483fb75480f5fe54a1bf911c3d3441ba0474
+  Enter passphrase <span class="hljs-keyword">for</span> root <span class="hljs-keyword">key</span> <span class="hljs-keyword">with</span> ID c7c1603: 
+  Enter passphrase <span class="hljs-keyword">for</span> <span class="hljs-built_in">new</span> targets <span class="hljs-keyword">key</span> <span class="hljs-keyword">with</span> ID a03454d: 
+  Repeat passphrase <span class="hljs-keyword">for</span> <span class="hljs-built_in">new</span> targets <span class="hljs-keyword">key</span> <span class="hljs-keyword">with</span> ID a03454d: 
+  Enter passphrase <span class="hljs-keyword">for</span> <span class="hljs-built_in">new</span> snapshot <span class="hljs-keyword">key</span> <span class="hljs-keyword">with</span> ID <span class="hljs-number">6</span>bd9be7: 
+  Repeat passphrase <span class="hljs-keyword">for</span> <span class="hljs-built_in">new</span> snapshot <span class="hljs-keyword">key</span> <span class="hljs-keyword">with</span> ID <span class="hljs-number">6</span>bd9be7: 
+  Enter username: admin
+  Enter password: 
+  ```</code></pre></div>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

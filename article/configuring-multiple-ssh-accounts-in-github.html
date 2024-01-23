@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Configuring Multiple SSH Accounts in GitHub - Blog</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Blog</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Configuring Multiple SSH Accounts in GitHub</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1705973736745"
+                  >2024-01-22 19:35</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1705973785309"
+                  >2024-01-22 19:36</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">blog</span>
+              
+              <span class="keyword">git</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>Original Date: 07/02/2020</p>
+<hr />
+<p>layout: page<br />
+categories: [tech]<br />
+title: Configuring Multiple SSH Accounts in GitHub<br />
+tags: [git, tech]</p>
+<hr />
+<p>GitHub doesn't allow to use the same ssh key with multiple accounts. If you have two keys, then you need to configure your ssh config so that it automatically chooses the right key based on the url</p>
+<ol>
+<li>
+<p>Generate keys</p>
+<ol>
+<li>ssh-keygen -t rsa_2 -b 4096 -C "some.email@gmail.com"
+<ol>
+<li>enter passphrase or leave blank</li>
+<li>enter a filename so that it doesn’t overwrite the default file</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>Add keys to ssh-agent</p>
+<ol>
+<li>ssh-add ~/.ssh/id_rsa</li>
+<li>ssh-add ~/.ssh/id_rsa_2</li>
+<li>Verify by running: ssh-add -l</li>
+</ol>
+</li>
+<li>
+<p>configure your ssh config file</p>
+<div><pre class="hljs"><code><span class="hljs-attribute">Host</span> anything.github.com
+   HostName github.com
+   PreferredAuthentications publickey
+   AddKeysToAgent <span class="hljs-literal">yes</span>
+   UseKeychain <span class="hljs-literal">yes</span>
+   IdentityFile ~/.ssh/id_rsa_2
+   IdentitiesOnly <span class="hljs-literal">yes</span>
+
+<span class="hljs-comment"># * is default and applies to everything</span>
+<span class="hljs-comment"># so putting an exception for the above profile</span>
+Host * !anything.github.com
+   AddKeysToAgent <span class="hljs-literal">yes</span>
+   UseKeychain <span class="hljs-literal">yes</span>
+   IdentityFile ~/.ssh/id_rsa</code></pre></div>
+</li>
+<li>
+<p>Verify your setup</p>
+<div><pre class="hljs"><code>| =&gt; ssh -T git@anything.github.com 
+Hi anything! You've successfully authenticated, but GitHub does not provide shell access.
+<span class="hljs-bullet">3.</span> <span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>
+| =&gt; ssh -T git@github.com 
+Hi yourname! You've successfully authenticated, but GitHub does not provide shell access.</code></pre></div>
+</li>
+<li>
+<p>Clone a repo</p>
+<ol>
+<li>you will need to use ssh (not https)</li>
+<li>Replace github.com with anything.github.com
+<ol>
+<li>Ex: if shown in GitHub git@github.com:barryclark/jekyll-now.git, use
+<ol>
+<li>git clone git@anything.github.com:barryclark/jekyll-now.git
+<ol>
+<li>you can verify this by running
+<ol>
+<li>git remote show origin
+<ol>
+<li>Fetch URL: git@anything.github.com:barryclark/jekyll-now.git</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

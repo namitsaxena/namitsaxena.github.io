@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Git Cheatsheet - Blog</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Blog</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Git Cheatsheet</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1705973799544"
+                  >2024-01-22 19:36</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1705973856721"
+                  >2024-01-22 19:37</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>Original Date: 06/13/2020</p>
+<hr />
+<p>layout: page<br />
+title: Git Cheatsheet<br />
+categories: [tech]<br />
+tags: [git, tech, cheatsheet]<br />
+comments: true</p>
+<hr />
+<h3 id="squash-commits">squash commits</h3>
+<ol>
+<li>Choose the exact number of commits that you want to squash<br />
+<code>git rebase -i HEAD~4</code></li>
+<li>In the menu that shows up, supply 'r' (reword) command for the top line (also note that in git the lines are listed in reverse chronological order</li>
+<li>For all other lines, supply 's' (squash) command, and save (:x) the menu</li>
+<li>The next menu would allow you to reword the top line commit, and the subsequent one would squash the remaining commits</li>
+<li>force push the squashed commits (<code>git push --force</code>)</li>
+</ol>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>How to create a static blog using Jekyll and GitHub - Blog</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Blog</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">How to create a static blog using Jekyll and GitHub</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1705973153876"
+                  >2024-01-22 19:25</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1705973306312"
+                  >2024-01-22 19:28</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">blog</span>
+              
+              <span class="keyword">jekyll</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>Original Date: 07/15/2020</p>
+<h2 id="overview">Overview</h2>
+<p>A static blog can easily be hosted in GitHub. Here we will be using <a title="https://github.com/poole/lanyon" href="https://github.com/poole/lanyon">Lanyon</a> theme which is a variant of <a title="https://github.com/poole/poole" href="https://github.com/poole/poole">poole</a>. This post won't be covering the basics of Jekyll but the resources given below provide a good overview of the same.</p>
+<h2 id="quick-start">Quick Start</h2>
+<p>To get up and running in two minutes, the following steps can be used:</p>
+<ul>
+<li>Fork <a title="https://github.com/poole/lanyon" href="https://github.com/poole/lanyon">https://github.com/poole/lanyon</a></li>
+<li>Rename this to: youraccountname.github.io</li>
+<li>Update _config.yml (master branch is default)
+<ol>
+<li>Update Name, title, etc</li>
+<li>baseUrl needs to be blank("") if this is the default domain</li>
+</ol>
+</li>
+<li>Update CNAME to your domain name if you have one, or blank this out</li>
+<li>Once published, you can access the site on youraccountname.github.io (or your domain of you configured it)</li>
+</ul>
+<h2 id="how-does-this-work">How does this work</h2>
+<ul>
+<li>All the references within _posts get processed</li>
+<li>all md files get processed and can be accessed without extension</li>
+<li>any html/md files at root level get added to the sidebar</li>
+<li>if there are any processing issues, github will notify you via email</li>
+</ul>
+<h2 id="customizations">Customizations</h2>
+<ol>
+<li>Create a separate blog collection</li>
+<li>Customize sidebar</li>
+<li>Add categories and tags indices</li>
+<li>Add archive page</li>
+<li>Enable commenting using Disqus</li>
+<li>Add google analytics</li>
+<li>Add gravatar pic to the sidebar</li>
+<li>Add favicon</li>
+<li>Add social media buttons</li>
+</ol>
+<h2 id="tips">Tips</h2>
+<ol>
+<li>Simple markdown can be used to make blog/site entries. But if needed, a <a title="https://prose.io/" href="https://prose.io/">prose.io</a> can be used as an online editor.</li>
+<li>You can clone another repo in your github account (other than the default static page one) and use the baseUrl to access it. Example: <a title="http://blog.namitsaxena.com/poole/" href="http://blog.namitsaxena.com/poole/">http://blog.namitsaxena.com/poole</a></li>
+</ol>
+<h2 id="other-popular-themes">Other Popular Themes</h2>
+<ul>
+<li><a title="https://github.com/poole/poole" href="https://github.com/poole/poole">Poole</a>: provide a clear and concise foundational setup for any Jekyll site. It does so by furnishing a full vanilla Jekyll install with example templates, pages, posts, and styles.
+<ul>
+<li><a title="https://github.com/poole/lanyon" href="https://github.com/poole/lanyon">Poole/Lanyon</a>: Lanyon is an unassuming Jekyll theme that places content first by tucking away navigation in a hidden drawer.
+<ul>
+<li>Example: <a title="https://codinfox.github.io/dev/2015/03/06/use-tags-and-categories-in-your-jekyll-based-github-pages/" href="https://codinfox.github.io/dev/2015/03/06/use-tags-and-categories-in-your-jekyll-based-github-pages/">codinfox.github.io</a></li>
+</ul>
+</li>
+<li><a title="https://github.com/poole/hyde" href="https://github.com/poole/hyde">Poole/Hyde</a>: Hyde is a brazen two-column Jekyll theme that pairs a prominent sidebar with uncomplicated content.
+<ul>
+<li>Example: <a title="https://longqian.me/2017/02/09/github-jekyll-tag/" href="https://longqian.me/2017/02/09/github-jekyll-tag/">longqian.me</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a title="https://github.com/bencentra/centrarium" href="https://github.com/bencentra/centrarium">centrarium</a>: A simple yet classy theme for your Jekyll website or blog.
+<ul>
+<li>Example <a title="https://www.nikhita.dev/build-blog-using-github-jekyll" href="https://www.nikhita.dev/build-blog-using-github-jekyll">www.nikhita.dev</a></li>
+</ul>
+</li>
+<li><a title="https://github.com/barryclark/jekyll-now" href="https://github.com/barryclark/jekyll-now">Jekyll-Now</a>: Simple static site generator that's perfect for GitHub hosted blogs</li>
+<li><a title="https://github.com/daattali/beautiful-jekyll" href="https://github.com/daattali/beautiful-jekyll">beautiful-jekyll</a>: ready-to-use template to help you create a beautiful website quickly. Perfect for personal sites, blogs, or simple project websites
+<ul>
+<li>Example <a title="https://beautifuljekyll.com/" href="https://beautifuljekyll.com/">https://beautifuljekyll.com/</a></li>
+</ul>
+</li>
+<li><a title="https://pmarsceill.github.io/just-the-docs/" href="https://pmarsceill.github.io/just-the-docs/">pmarsceill.github.io</a>: Focus on writing good documentation</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a title="https://jekyllrb.com/docs/" href="https://jekyllrb.com/docs/">Jekyll Official Documentation</a></li>
+<li><a title="http://jekyllbootstrap.com/lessons/jekyll-introduction.html" href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">Jekyll Introduction</a></li>
+<li><a title="https://jekyllrb.com/docs/step-by-step/01-setup/" href="https://jekyllrb.com/docs/step-by-step/01-setup/">Jekyll: Step by Step</a></li>
+<li><a title="https://www.nikhita.dev/build-blog-using-github-jekyll" href="https://www.nikhita.dev/build-blog-using-github-jekyll">How to build a blog using Github, Jekyll and Lanyon by Nikhita Raghunath</a></li>
+<li><a title="https://codinfox.github.io/dev/2015/03/06/use-tags-and-categories-in-your-jekyll-based-github-pages/" href="https://codinfox.github.io/dev/2015/03/06/use-tags-and-categories-in-your-jekyll-based-github-pages/">Use Tags and Categories in your Jekyll based Github Pages without plugins</a></li>
+</ul>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
