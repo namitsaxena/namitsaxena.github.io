@@ -24,8 +24,8 @@
                 ></span
               >
               <span
-                >Updated At：<time datetime="1705796457834"
-                  >2024-01-20 18:20</time
+                >Updated At：<time datetime="1713325352001"
+                  >2024-04-16 22:42</time
                 ></span
               >
             </div>
@@ -62,6 +62,32 @@
 <li>A deep learning model, or a DL model, is a neural network that has been trained to learn how to perform a task, such as recognizing objects in digital images and videos, or understanding human speech. Deep learning models are trained by using large sets of data and algorithms that enable the model to learn how to perform the task. The more data the model is trained on, the better it can learn to perform the task.</li>
 </ul>
 </li>
+<li>
+<h4 id="small-language-models">Small Language Models</h4>
+<ul>
+<li>An SLM is generally five to 10 times smaller than LLMs and are open source projects. The smaller size means much lower energy consumption. They can also be hosted on a single GPU. They allow for faster training and inference times, which provides for much lower latency.
+<ul>
+<li>Their reduced complexity makes them a good choice for on-prem deployment, meeting strict compliance and data privacy standards.</li>
+<li>Despite their reduced size, SLMs demonstrate capabilities that are remarkably close to LLMs in various NLU(natural language understanding)  tasks. This is especially the case when they are effectively fine-tuned (or retrained) for specialized use cases, say health care or coding.</li>
+</ul>
+</li>
+<li>Some of the top SLMs in the market include Llama-2-13b and CodeLlama-7b from Meta, Mistral-7b and Mixtral 8x7b from Mistral and Phi-2 and Orca-2 from Microsoft.[<a title="https://aibusiness.com/nlp/small-language-models-gaining-ground-at-enterprises#close-modal" href="https://aibusiness.com/nlp/small-language-models-gaining-ground-at-enterprises#close-modal">aibusiness.com</a>]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h4 id="formats-quantization-methods">Formats &amp; Quantization Methods**</h4>
+<ul>
+<li>Quantization is a technique to reduce the computational and memory costs of running inference by representing the weights and activations with low-precision data types like 8-bit integer (int8) instead of the usual 32-bit floating point (float32). Reducing the number of bits means the resulting model requires less memory storage, consumes less energy (in theory), and operations like matrix multiplication can be performed much faster with integer arithmetic. It also allows to run models on embedded devices, which sometimes only support integer data types.[<a title="https://huggingface.co/docs/optimum/en/concept_guides/quantization" href="https://huggingface.co/docs/optimum/en/concept_guides/quantization">huggingface.co</a>]</li>
+<li>A Guide to Quantization in LLMs | Symbl.ai[<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]</li>
+<li>Techniques
+<ul>
+<li>GPTQ (General Pre-Trained Transformer Quantization) is a quantization technique designed to reduce the size of models so they can run on a <strong>single GPU</strong>. [<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]</li>
+<li><a title="https://ggml.ai/" href="https://ggml.ai/">GGML</a> (which is said to stand for Georgi Gerganov Machine Learning, after its creator, or GPT-Generated Model Language) is a C-based machine learning library designed for the quantization of Llama models so they can <strong>run on a CPU</strong>. More specifically, the library allows you to save quantized models in the GGML binary format, which can be executed on a broader range of hardware. [<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]</li>
+<li><strong>GGUF</strong> (GPT-Generated Unified Format), meanwhile, is a successor to GGML and is designed to address its limitations – most notably, enabling the quantization of non-Llama models.[<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Model <strong>Parameters Count</strong> (“Parameters”): Model parameter count or “number of parameters” refers to the number of weights in all layers of a model. As a general rule, the more parameters a model has, the more capable and accurate it is assumed to be,[<a title="https://sambanova.ai/blog/generative-ai-terms/" href="https://sambanova.ai/blog/generative-ai-terms/">sambanova.ai</a>]</li>
@@ -77,8 +103,10 @@
 <li><a title="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/" href="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/">LLM Apps Are Mostly Data Pipelines[meltano.com]</a></li>
 </ul>
 </li>
-<li>RAG
+<li>
+<h3 id="rag">RAG</h3>
 <ul>
+<li>A Simple Guide To Retrieval Augmented Generation Language Models — Smashing Magazine[www.smashingmagazine.com]</li>
 <li><a title="https://stackoverflow.blog/2023/10/18/retrieval-augmented-generation-keeping-llms-relevant-and-current/" href="https://stackoverflow.blog/2023/10/18/retrieval-augmented-generation-keeping-llms-relevant-and-current/">Retrieval augmented generation: Keeping LLMs relevant and current - Stack Overflow[stackoverflow.blog]</a></li>
 <li><strong>In-context learning</strong> (used with RAG) sends context to pre-trained models as part of the prompt at runtime to help it understand more about your question. Whereas fine tuning is further training the pre-trained models to take into account a new set of contextual data then all future prompts go directly to your new iteration of the model.<a title="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/" href="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/">[meltano.com]</a></li>
 <li>Value of LLM if the actual source is the Retrieving data source
@@ -90,6 +118,11 @@
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li>Agents
+<ul>
+<li>Unlike conventional chains, where actions are preordained in code, Agents harness the reasoning capabilities of a language model to dynamically determine the next steps and their order.[<a title="https://medium.com/@zahidali133/comparison-of-llamaindex-and-langchain-4900989752ac" href="https://medium.com/@zahidali133/comparison-of-llamaindex-and-langchain-4900989752ac">medium.com</a>]</li>
 </ul>
 </li>
 <li>General Topics
@@ -115,10 +148,16 @@
 <li>LlamaIndex</li>
 <li>HuggingFace</li>
 <li>Ray Serve</li>
+<li><a title="https://github.com/open-webui/open-webui#how-to-install-" href="https://github.com/open-webui/open-webui#how-to-install-">Open WebUI</a> is an extensible, feature-rich, and user-friendly self-hosted WebUI designed to operate entirely offline. It supports various LLM runners, including Ollama and OpenAI-compatible APIs[<a title="https://docs.openwebui.com/" href="https://docs.openwebui.com/">docs.openwebui.com</a>]</li>
 </ul>
 </li>
 <li>open source language models
 <ul>
+<li>Ollama[<a title="https://ollama.com/" href="https://ollama.com/">ollama.com</a>]: Run Llama 2, Code Llama, and other models. Customize and create your own
+<ul>
+<li><a title="https://github.com/ollama/ollama" href="https://github.com/ollama/ollama">https://github.com/ollama/ollama</a></li>
+</ul>
+</li>
 <li>LLAMA 2
 <ul>
 <li><a title="https://ai.meta.com/llama/" href="https://ai.meta.com/llama/">https://ai.meta.com/llama/</a></li>
@@ -127,6 +166,10 @@
 <li>GPT4ALL - runs on mac</li>
 </ul>
 </li>
+</ul>
+<h3 id="terms">Terms</h3>
+<ul>
+<li>Local Inference: Inference means interacting with the model — i.e. asking it questions. [<a title="https://medium.com/@cpaggen/minimal-python-code-for-local-llm-inference-112782af509a" href="https://medium.com/@cpaggen/minimal-python-code-for-local-llm-inference-112782af509a">medium.com</a>]</li>
 </ul>
 <p><strong>Resources</strong></p>
 <ul>
@@ -178,6 +221,8 @@
 <li><a title="https://ai.meta.com/llama/" href="https://ai.meta.com/llama/">Llama 2 - Meta AI[ai.meta.com]</a></li>
 <li><a title="https://www.ibm.com/blog/open-source-large-language-models-benefits-risks-and-types/" href="https://www.ibm.com/blog/open-source-large-language-models-benefits-risks-and-types/">Open source large language models: Benefits, risks and types - IBM Blog[www.ibm.com]</a></li>
 <li><a title="https://betterprogramming.pub/navigating-the-ai-hype-and-thinking-about-niche-llm-applications-22ea7929b33d" href="https://betterprogramming.pub/navigating-the-ai-hype-and-thinking-about-niche-llm-applications-22ea7929b33d">Navigating the AI Hype and Thinking about Niche LLM Applications | by Hadi Javeed | Better Programming[betterprogramming.pub]</a></li>
+<li>12 days of no-cost training to learn generative AI this December <a title="https://cloud.google.com/blog/topics/training-certifications/12-days-of-no-cost-generative-ai-training?mkt_tok=ODA4LUdKVy0zMTQAAAGP2Yaxi4XQa6WurX6avEwAU2Vget-6Oh8Dgf-2og9-TS4C7M90IS-DREIuRNIJNsGUTm5YrIcUeN7QGYuYIRLyvXvZCptFWijwjtDCCj-_T64NnD0D-LA" href="https://cloud.google.com/blog/topics/training-certifications/12-days-of-no-cost-generative-ai-training?mkt_tok=ODA4LUdKVy0zMTQAAAGP2Yaxi4XQa6WurX6avEwAU2Vget-6Oh8Dgf-2og9-TS4C7M90IS-DREIuRNIJNsGUTm5YrIcUeN7QGYuYIRLyvXvZCptFWijwjtDCCj-_T64NnD0D-LA">google</a></li>
+<li>AI Demos[<a title="https://ai-demos.dev/" href="https://ai-demos.dev/">ai-demos.dev</a>]</li>
 <li>Neural Networks to LLM
 <ul>
 <li><a title="https://aws.amazon.com/compare/the-difference-between-deep-learning-and-neural-networks/" href="https://aws.amazon.com/compare/the-difference-between-deep-learning-and-neural-networks/">Neural Networks vs Deep Learning - Difference Between Artificial Intelligence Fields - AWS[aws.amazon.com]</a></li>
