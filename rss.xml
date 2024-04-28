@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Thu, 18 Apr 2024 00:38:04 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 28 Apr 2024 15:00:51 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -637,7 +637,8 @@ Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<spa
 <li>
 <h3 id="models">Models</h3>
 <ul>
-<li>AI model is a tool or algorithm which is based on a certain data set through which it can arrive at a decision – all without the need for human interference in the decision-making process.
+<li>
+<p>AI model is a tool or algorithm which is based on a certain data set through which it can arrive at a decision – all without the need for human interference in the decision-making process.</p>
 <ul>
 <li>A deep learning model, or a DL model, is a neural network that has been trained to learn how to perform a task, such as recognizing objects in digital images and videos, or understanding human speech. Deep learning models are trained by using large sets of data and algorithms that enable the model to learn how to perform the task. The more data the model is trained on, the better it can learn to perform the task.</li>
 </ul>
@@ -648,7 +649,7 @@ Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<spa
 <li>An SLM is generally five to 10 times smaller than LLMs and are open source projects. The smaller size means much lower energy consumption. They can also be hosted on a single GPU. They allow for faster training and inference times, which provides for much lower latency.
 <ul>
 <li>Their reduced complexity makes them a good choice for on-prem deployment, meeting strict compliance and data privacy standards.</li>
-<li>Despite their reduced size, SLMs demonstrate capabilities that are remarkably close to LLMs in various NLU(natural language understanding)  tasks. This is especially the case when they are effectively fine-tuned (or retrained) for specialized use cases, say health care or coding.</li>
+<li>Despite their reduced size, SLMs demonstrate capabilities that are remarkably close to LLMs in various NLU(natural language understanding) tasks. This is especially the case when they are effectively fine-tuned (or retrained) for specialized use cases, say health care or coding.</li>
 </ul>
 </li>
 <li>Some of the top SLMs in the market include Llama-2-13b and CodeLlama-7b from Meta, Mistral-7b and Mixtral 8x7b from Mistral and Phi-2 and Orca-2 from Microsoft.[<a title="https://aibusiness.com/nlp/small-language-models-gaining-ground-at-enterprises#close-modal" href="https://aibusiness.com/nlp/small-language-models-gaining-ground-at-enterprises#close-modal">aibusiness.com</a>]</li>
@@ -664,20 +665,35 @@ Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<spa
 <li>Techniques
 <ul>
 <li>GPTQ (General Pre-Trained Transformer Quantization) is a quantization technique designed to reduce the size of models so they can run on a <strong>single GPU</strong>. [<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]</li>
-<li><a title="https://ggml.ai/" href="https://ggml.ai/">GGML</a> (which is said to stand for Georgi Gerganov Machine Learning, after its creator, or GPT-Generated Model Language) is a C-based machine learning library designed for the quantization of Llama models so they can <strong>run on a CPU</strong>. More specifically, the library allows you to save quantized models in the GGML binary format, which can be executed on a broader range of hardware. [<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]</li>
+<li><a title="https://ggml.ai/" href="https://ggml.ai/">GGML</a> (<a title="https://github.com/ggerganov/ggml" href="https://github.com/ggerganov/ggml">github</a>)(which is said to stand for Georgi Gerganov Machine Learning, after its creator, or GPT-Generated Model Language) is a C-based machine learning library designed for the quantization of Llama models so they can <strong>run on a CPU</strong>. More specifically, the library allows you to save quantized models in the GGML binary format, which can be executed on a broader range of hardware. [<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]
+<ul>
+<li>is primarily a tensor library.</li>
+</ul>
+</li>
 <li><strong>GGUF</strong> (GPT-Generated Unified Format), meanwhile, is a successor to GGML and is designed to address its limitations – most notably, enabling the quantization of non-Llama models.[<a title="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/" href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">symbl.ai</a>]</li>
 </ul>
 </li>
+<li>Tools
+<ul>
+<li>Converting HuggingFace Models to GGUF/GGML | Substratus.AI[[www.substratus.ai](<a title="https://www.substratus.ai/blog/converting-hf-model-gguf-model/" href="https://www.substratus.ai/blog/converting-hf-model-gguf-model/">https://www.substratus.ai/blog/converting-hf-model-gguf-model/</a>)]</li>
 </ul>
 </li>
-<li>Model <strong>Parameters Count</strong> (“Parameters”): Model parameter count or “number of parameters” refers to the number of weights in all layers of a model. As a general rule, the more parameters a model has, the more capable and accurate it is assumed to be,[<a title="https://sambanova.ai/blog/generative-ai-terms/" href="https://sambanova.ai/blog/generative-ai-terms/">sambanova.ai</a>]</li>
-<li><strong>Prompt</strong>: An interface where a user can interact with a generative AI model using natural language. Within these prompt interfaces, a user can make a specific request of a model such as “Write a paragraph summary of generative AI”, or “Draw a picture with horses running through a field with a forest in the background, during the spring”[<a title="https://sambanova.ai/blog/generative-ai-terms/" href="https://sambanova.ai/blog/generative-ai-terms/">sambanova.ai</a>]
+</ul>
+</li>
+<li>
+<p>Model <strong>Parameters Count</strong> (“Parameters”): Model parameter count or “number of parameters” refers to the number of weights in all layers of a model. As a general rule, the more parameters a model has, the more capable and accurate it is assumed to be,[<a title="https://sambanova.ai/blog/generative-ai-terms/" href="https://sambanova.ai/blog/generative-ai-terms/">sambanova.ai</a>]</p>
+</li>
+<li>
+<p><strong>Prompt</strong>: An interface where a user can interact with a generative AI model using natural language. Within these prompt interfaces, a user can make a specific request of a model such as “Write a paragraph summary of generative AI”, or “Draw a picture with horses running through a field with a forest in the background, during the spring”[<a title="https://sambanova.ai/blog/generative-ai-terms/" href="https://sambanova.ai/blog/generative-ai-terms/">sambanova.ai</a>]</p>
 <ul>
 <li>Giving Large Language Models Context | by Simon Attard | Medium[<a title="https://medium.com/@simon_attard/giving-large-language-models-context-2d1956a6a017" href="https://medium.com/@simon_attard/giving-large-language-models-context-2d1956a6a017">medium.com</a>]</li>
 </ul>
 </li>
-<li>Fine Tuning</li>
-<li>Application Architecture
+<li>
+<p>Fine Tuning</p>
+</li>
+<li>
+<p>Application Architecture</p>
 <ul>
 <li><a title="https://a16z.com/emerging-architectures-for-llm-applications/" href="https://a16z.com/emerging-architectures-for-llm-applications/">Emerging Architectures for LLM Applications | Andreessen Horowitz[a16z.com]</a></li>
 <li><a title="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/" href="https://meltano.com/blog/llm-apps-are-mostly-data-pipelines/">LLM Apps Are Mostly Data Pipelines[meltano.com]</a></li>
@@ -700,12 +716,14 @@ Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<spa
 </li>
 </ul>
 </li>
-<li>Agents
+<li>
+<p>Agents</p>
 <ul>
 <li>Unlike conventional chains, where actions are preordained in code, Agents harness the reasoning capabilities of a language model to dynamically determine the next steps and their order.[<a title="https://medium.com/@zahidali133/comparison-of-llamaindex-and-langchain-4900989752ac" href="https://medium.com/@zahidali133/comparison-of-llamaindex-and-langchain-4900989752ac">medium.com</a>]</li>
 </ul>
 </li>
-<li>General Topics
+<li>
+<p>General Topics</p>
 <ul>
 <li>How to use with your own data</li>
 <li>How to use with your own tool
@@ -715,14 +733,16 @@ Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<spa
 </li>
 </ul>
 </li>
-<li>How to use with your own data
+<li>
+<p>How to use with your own data</p>
 <ul>
 <li><a title="https://deci.ai/blog/fine-tuning-peft-prompt-engineering-and-rag-which-one-is-right-for-you/" href="https://deci.ai/blog/fine-tuning-peft-prompt-engineering-and-rag-which-one-is-right-for-you/">Full Fine-Tuning, PEFT, Prompt Engineering, or RAG?[deci.ai]</a></li>
 <li><a title="https://medium.com/@younesh.kc/rag-vs-fine-tuning-in-large-language-models-a-comparison-c765b9e21328" href="https://medium.com/@younesh.kc/rag-vs-fine-tuning-in-large-language-models-a-comparison-c765b9e21328">RAG vs. Fine-Tuning in Large Language Models: A Comparison | by younesh kc | Oct, 2023 | Medium[medium.com]</a></li>
 <li><a title="https://www.montecarlodata.com/blog-the-moat-for-enterprise-ai-is-rag-fine-tuning/" href="https://www.montecarlodata.com/blog-the-moat-for-enterprise-ai-is-rag-fine-tuning/">The Moat For Enterprise AI Is RAG + Fine Tuning - Here’s Why[www.montecarlodata.com]</a></li>
 </ul>
 </li>
-<li>Tools
+<li>
+<p>Tools</p>
 <ul>
 <li>Langchain</li>
 <li>LlamaIndex</li>
@@ -731,7 +751,8 @@ Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<spa
 <li><a title="https://github.com/open-webui/open-webui#how-to-install-" href="https://github.com/open-webui/open-webui#how-to-install-">Open WebUI</a> is an extensible, feature-rich, and user-friendly self-hosted WebUI designed to operate entirely offline. It supports various LLM runners, including Ollama and OpenAI-compatible APIs[<a title="https://docs.openwebui.com/" href="https://docs.openwebui.com/">docs.openwebui.com</a>]</li>
 </ul>
 </li>
-<li>open source language models
+<li>
+<p>open source language models</p>
 <ul>
 <li>Ollama[<a title="https://ollama.com/" href="https://ollama.com/">ollama.com</a>]: Run Llama 2, Code Llama, and other models. Customize and create your own
 <ul>
@@ -744,6 +765,50 @@ Administrative keys <span class="hljs-keyword">for</span> core.harbor.domain<spa
 </ul>
 </li>
 <li>GPT4ALL - runs on mac</li>
+</ul>
+</li>
+</ul>
+<h3 id="ecosystem">Ecosystem</h3>
+<ul>
+<li>open-source libraries for LLM inference and serving.
+<ul>
+<li>vLLM, Ray Serve, Text Generation Inference(TGI)(from Hugging Face), OpenLLM, etc</li>
+<li>Reference: Frameworks for Serving LLMs. A comprehensive guide into LLMs inference and serving | by Sergei Savvov | Jul, 2023 | Medium | Better Programming[<a title="https://betterprogramming.pub/frameworks-for-serving-llms-60b7f7b23407" href="https://betterprogramming.pub/frameworks-for-serving-llms-60b7f7b23407">betterprogramming.pub</a>]</li>
+<li>Comparing LLM serving frameworks — LLMOps | by Thiyagarajan Palaniyappan | Medium[<a title="https://medium.com/@plthiyagu/comparing-llm-serving-frameworks-llmops-f02505864754" href="https://medium.com/@plthiyagu/comparing-llm-serving-frameworks-llmops-f02505864754">medium.com</a>]</li>
+<li><strong>Text Generation Inference</strong> (Hugging Face)
+<ul>
+<li>Run your LLM on Text Generation Inference without the Internet and make your Security team happy! - YouTube[<a title="https://www.youtube.com/watch?v=mpX6ByX80Jw" href="https://www.youtube.com/watch?v=mpX6ByX80Jw">www.youtube.com</a>]</li>
+<li>How to install the Enterprise grade AI Playground from Hugging Face: Text Generation Inference (TGI) - YouTube[<a title="https://www.youtube.com/watch?v=s27m_LRSvqM" href="https://www.youtube.com/watch?v=s27m_LRSvqM">www.youtube.com</a>]</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="llms-on-cloud">LLMs on Cloud</h3>
+<ul>
+<li>GCP
+<ul>
+<li>Running AI and ML workloads on GCP (with GPUs, TPUs, etc)
+<ul>
+<li><a title="https://cloud.google.com/kubernetes-engine/docs/how-to/serve-llm-l4-ray" href="https://cloud.google.com/kubernetes-engine/docs/how-to/serve-llm-l4-ray">https://cloud.google.com/kubernetes-engine/docs/how-to/serve-llm-l4-ray</a>
+<ul>
+<li><a title="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/ray-on-gke" href="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/ray-on-gke">https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/ray-on-gke</a></li>
+<li><a title="https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/blob/main/ai-ml/gke-ray/rayserve/models/llama2-7b-chat-hf.yaml" href="https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/blob/main/ai-ml/gke-ray/rayserve/models/llama2-7b-chat-hf.yaml">https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/blob/main/ai-ml/gke-ray/rayserve/models/llama2-7b-chat-hf.yaml</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>GKE examples
+<ul>
+<li><a title="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/tutorials-and-examples/genAI-LLM/deploying-mistral-7b-instruct-L4gpus" href="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/tutorials-and-examples/genAI-LLM/deploying-mistral-7b-instruct-L4gpus">Guide to Serving Mistral 7B-Instruct v0.1 on GKE Utilizing Nvidia L4-GPUs</a> (HF-text-generation-inference)
+<ul>
+<li>Serving Mistral 7B on L4 GPUs running on GKE | by Javier Cañadillas | Google Cloud - Community | Medium[<a title="https://medium.com/google-cloud/serving-mistral-7b-on-l4-gpus-running-on-gke-25c6041dff27" href="https://medium.com/google-cloud/serving-mistral-7b-on-l4-gpus-running-on-gke-25c6041dff27">medium.com</a>]</li>
+</ul>
+</li>
+<li><a title="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/tutorials-and-examples/genAI-LLM/serving-llama2-70b-on-l4-gpus" href="https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/tutorials-and-examples/genAI-LLM/serving-llama2-70b-on-l4-gpus">Tutorial: Serving Llama 2 70b on GKE L4 GPUs</a> (uses  text-generation-inference )</li>
+<li></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
